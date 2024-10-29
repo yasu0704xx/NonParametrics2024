@@ -1,0 +1,84 @@
+\documentclass[xcolor=svgnames,dvipdfmx,cjk]{beamer} 
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} 
+\usetheme{Madrid}
+\setbeamercolor{background canvas}{bg=Snow}
+\usecolortheme[named=RoyalBlue]{structure}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{theorems}[numbered]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\theoremstyle{example}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{question}[thm]{Question}
+\newtheorem{prob}[thm]{Problem}
+\usepackage{bbm}
+\usepackage{ascmac}
+
+\begin{document} 
+
+%%%%%講演に関する情報%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Li and Racine (2007, Chapter 8)]{Semiparametric Single Index Models} 
+\author[Y. Matsumura]{Yasuyuki Matsumura}          
+\institute[]{Graduate School of Economics, Kyoto University} 
+\date{\today}
+
+
+%%%%%タイトルページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}                  
+\titlepage                     
+\end{frame}
+
+
+%%%%%目次のページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}                  
+\tableofcontents
+\end{frame}
+%本文中に挿入するSECTION環境によって定義された目次が自動で反映される
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Identification Conditions}
+
+\section{Estimation: Ichimura (1993)}
+
+\section{Direct Semiparametric Estimators for $\beta$}
+
+\section{Bandwidth Selection}
+
+\section{Klein and Spady (1993)}
+
+\section{Lewbel (2000)}
+
+\section{Manski's (1975) Maximum Score Estimator}
+
+\section{Horowitz's (1992) Smoothed Maximum Score Estimator}
+
+\section{Han's (1987) Maximum Rank Estimator}
+
+\section{Multinomial Discrete Choice Models}
+
+\section{Ai's (1997) Semiparametric Maximum Likelihood Approach}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{References}
+
+\begin{frame}{References}
+  \begin{itemize}
+    \item Li, Q. and J. S. Racine, (2007). 
+          \textit{Nonparametric Econometrics: Theory and Practice,} 
+          Princeton University Press.
+    \item 末石直也 (2024) 『データ駆動型回帰分析：計量経済学と機械学習の融合』日本評論社．
+    \item 西山慶彦，人見光太郎 (2023) 『ノン・セミパラメトリック統計解析（理論統計学教程：数理統計の枠組み）』共立出版．
+    \item このほかに，ECON 718 NonParametric Econometrics (Bruce Hansen, Spring 2009, University of Wisconsin-Madison) や，
+          セミノンパラメトリック計量分析（末石直也，2014年度後期，京都大学大学院経済学研究科）のレクチャーノートを参照した． 
+  \end{itemize}
+\end{frame}
+
+\end{document}
