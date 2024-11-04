@@ -30,16 +30,12 @@
 \end{frame}
 
 
-%%%%%目次のページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}                  
-\tableofcontents
-\end{frame}
-%本文中に挿入するSECTION環境によって定義された目次が自動で反映される
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%Before showwing the contents of the slides...
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Introduction}
   \begin{itemize}
     \item  A semiparametric single index model is given by 
@@ -52,7 +48,7 @@
               & X \in \mathbb{R}^{q}: \text{a }  q \times 1 \text{ explanatory vector}, \\
               & \beta_0 \in \mathbb{R}^{q}: \text{a }  q \times 1 \text{ vector of unknown parameters}, \\
               & u \in \mathbb{R}: \text{an error term which satisfies } \mathbb{E}(u \mid X) =0, \\
-              & g(\cdot): \text{an unknown function}.
+              & g(\cdot): \text{an unknown distribution function}.
             \end{align*}
   \end{itemize}
 \end{frame}
@@ -60,7 +56,7 @@
 \begin{frame}{Introduction}
   \begin{itemize}
     \item Even though $x$ is a $q\times1$ vector, 
-          the term $x^{T} \beta_0$ is a scalar of a single linear combination, 
+          $x^{T} \beta_0$ is a scalar of a single linear combination, 
           which is called a single index.
     \item By the form of the single index model, we obtain
           \begin{align*}
@@ -86,6 +82,9 @@
           \end{align*}
     \item If $g(\cdot)$ is the CDF of Normal$(0, 1)$,
           then the model turns out to be a probit model.
+          \begin{itemize}
+            \item See the textbook for further discussions on a probit model.
+          \end{itemize}
     \item If $g(\cdot)$ is the CDF of logistic distribution,
           then the model turns out to be a logistic regression model.
   \end{itemize}
@@ -93,17 +92,71 @@
 \end{frame}
 
 
+%%%%%目次のページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}                  
+  \tableofcontents
+\end{frame}
+%本文中に挿入するSECTION環境によって定義された目次が自動で反映される 
+
+
 \section{Identification Conditions}
 \begin{frame}
   \tableofcontents[currentsection]
 \end{frame}
 
+\begin{frame}{Identification Conditions}
+  \begin{itembox}[l]{Proposition 8.1 (Identification of a Single Index Model)}
+    \quad 
+    For the semiparametric single index model $Y = g(x^{T} \beta_0) + u$,
+    identification of $\beta_0$ and $g(\cdot)$ requires that
+    \begin{itemize}
+      \item (i)
+            $x$ should not contain a constant/intercept, 
+            and must contain at least one continuous variable.
+            Moreover, $\|\beta_0\|$=1.
+      \item (ii)
+            $g(\cdot)$ is differentiable 
+            and is not a constant function on the support of $x^{T}\beta_0$.
+      \item (iii)
+            For the discrete components of $x$, 
+            varying the values of the discrete variables will not divide the support of $x^{T}\beta_0$ into disjoint subsets.
+    \end{itemize}
+  \end{itembox}
+\end{frame}
 
+\begin{frame}{Identification Condition (i)}
+\begin{itemize}
+  \item Note that the location and the scale of $\beta_0$ are not identified.
+  \item The vector $x$ cannot include an intercept 
+        because the function $g(\cdot)$ (which is to be estimated in nonparametric manners) includes any location and level shift.
+        \begin{itemize}
+          \item That is, $\beta_0$ cannot contain a location parameter.
+        \end{itemize}
+  \item Some normalization criterion (scale restrictions) for $\beta_0$ are needed.
+        \begin{itemize}
+          \item One approach is to set $\| \beta_0 \|$.
+          \item The second approach is to set one component of $\beta_0$ to equal one. 
+                This approach requires that 
+                the variable corresponding to the component set to equal one 
+                is continuously distributed 
+                and has a non-zero coefficient.
+          \item Then, $x$ must be dimension $2$ or larger. 
+                If $x$ is one-dimensional, then $\beta_0 \in \mathbb{R}^1$ is simply normalized to 1, 
+                and the model is the one-dimensional nonparametric regression $E(Y \mid x) = g(x)$ with no semiparametric component.
+        \end{itemize}
+\end{itemize}
+\end{frame}
 
-
-
-
-
+\begin{frame}{Identification Conditions (ii) and (iii)}
+\begin{itemize}
+  \item The function $g(\cdot)$ cannot be a constant function and must be differentiable on the support of $x^{T}\beta_0$.
+  \item $x$ must contain at least one continuously distributed variable
+        and this continuous variable must have non-zero coefficient.
+        \begin{itemize}
+          \item  If not, $x^{T} \beta_0$ only takes a discrete set of values and it would be impossible to identify a continuous function $g(\cdot)$ on this discrete support.
+        \end{itemize}
+\end{itemize}
+\end{frame}
 
 
 \section{Estimation: Ichimura (1993)}
@@ -244,15 +297,22 @@
   \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{References}
+\begin{frame}{References (1)}
   \begin{itemize}
     \item Li, Q. and J. S. Racine, (2007). 
           \textit{Nonparametric Econometrics: Theory and Practice,} 
           Princeton University Press.
     \item 末石直也 (2024) 『データ駆動型回帰分析：計量経済学と機械学習の融合』日本評論社．
     \item 西山慶彦，人見光太郎 (2023) 『ノン・セミパラメトリック統計解析（理論統計学教程：数理統計の枠組み）』共立出版．
-    \item このほかに，ECON 718 NonParametric Econometrics (Bruce Hansen, Spring 2009, University of Wisconsin-Madison) や，
-          セミノンパラメトリック計量分析（末石直也，2014年度後期，京都大学大学院経済学研究科）のレクチャーノートを参照した． 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{References (2)}
+\quad 
+Useful references also include some lecture notes of the following topic courses:
+  \begin{itemize}
+    \item ECON 718 NonParametric Econometrics (Bruce Hansen, Spring 2009, University of Wisconsin-Madison),
+    \item セミノンパラメトリック計量分析（末石直也，2014年度後期，京都大学）．
   \end{itemize}
 \end{frame}
 
