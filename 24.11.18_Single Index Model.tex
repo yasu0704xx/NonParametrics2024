@@ -159,16 +159,73 @@
 \end{frame}
 
 
-\section{Estimation: Ichimura (1993)}
+\section{Estimation: Ichimura (1993)'s Method}
 \begin{frame}
   \tableofcontents[currentsection]
 \end{frame}
 
+\begin{frame}{Ichimura (1993)'s Method: Semiparametric Least Squares}
+\begin{itemize}
+  \item Suppose that the functional form of $g(\cdot)$ were known.
+  \item Then we could estimate $\beta_0$ by minimizing the least-squares criterion:
+        \begin{align*}
+        \sum_{i=1} \left[ Y_i - g(X_i^{T}\beta) \right]^2
+        \end{align*}
+        with respect to $\beta$.
+  \item We could think about replacing $g(\cdot)$ with a nonparametric estimator $\hat{g}(\cdot)$.
+  \item However, since $g(z)$ is the conditional mean of $Y_i$ given $X_i^{T} \beta_0 = z$,
+        $g(\cdot)$ depends on unknown $\beta_0$, so we cannot estimate $g(\cdot)$ here.
+\end{itemize}
+\end{frame}
 
+\begin{frame}{Ichimura (1993)'s Method: Semiparametric Least Squares}
+\begin{itemize}
+  \item Nevertheless, for a fixed value of $\beta$, we can estimate
+        \begin{align*}
+        G(X_i^{T} \beta) 
+          := \mathbb{E} (Y_i \mid X_i^{T}\beta) 
+           = \mathbb{E} (g(X_i^{T}\beta) \mid X_i^{T}\beta).
+        \end{align*}
+  \item In general $G(X_i^{T}\beta) \neq g(X_i^{T} \beta)$.
+  \item When $\beta = \beta_0$ \footnote{Recall that $\beta_0$ is the true value of $\beta$.},
+        it hold that $G(X_i^{T}\beta_0) = g(X_i^{T} \beta_0)$. 
+\end{itemize}  
+\end{frame}
 
-
-
-
+\begin{frame}{Ichimura (1993)'s Method: Semiparametric Least Squares}
+  \begin{itemize}
+  \item First, we estimate $G(X_i^{T}\beta)$  
+        with the leave-one-out NW estimator:
+        \begin{align*}
+          \hat{G}_{-i}(X_i^{T}\beta) 
+              :&= \hat{\mathbb{E}}_{-i}(Y_i \mid X_i^{T} \beta) \\
+               &= \frac
+                  {\sum_{j \neq i} Y_j 
+                   K \left( \frac
+                            {X_j^{T}\beta - X_i^{T}\beta}
+                            {h} 
+                     \right) 
+                  }
+                  {\sum_{j \neq i} 
+                   K \left( \frac
+                           {X_j^{T}\beta - X_i^{T}\beta}
+                           {h} 
+                     \right) 
+                  }.
+        \end{align*}
+  \item Second, 
+        using the leave-one-out NW estimator $\hat{G}_{-i}(X_i^{T}\beta)$,
+        we estimate $\beta$ with
+        \begin{align*}
+          \hat{\beta} 
+            := \arg \min_{\beta} 
+                   \sum_{i=1}^{n}  
+                        \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
+                        w(X_i) \mathbf{1}(X_i \in A_n) := S_n(\beta),
+        \end{align*}
+        where 
+\end{itemize}
+\end{frame}
 
 
 
