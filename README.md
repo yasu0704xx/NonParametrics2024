@@ -9,7 +9,7 @@
         Li, Q. and J. S. Racine. (2007)
         *Nonparametric Econometrics: Theory and Practice,*
         Princeton University Press
-である．その他の参考文献は「Useful References.pdf」に記載されている．
+です．その他の参考文献は「Useful References.pdf」に記載されています．
 
 ## ライセンス
 
