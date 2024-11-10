@@ -36,7 +36,7 @@
 
 \begin{frame}{Introduction}
   \begin{itemize}
-    \item  A semiparametric single index model is given by 
+    \item  \alert{A semiparametric single index model} is given by 
             \begin{align*}
               Y = g (X^{T} \beta_0) + u,
             \end{align*}
@@ -55,7 +55,7 @@
   \begin{itemize}
     \item Even though $x$ is a $q\times1$ vector, 
           $x^{T} \beta_0$ is a scalar of a single linear combination, 
-          which is called a single index.
+          which is called \alert{a single index}.
     \item By the form of the single index model, we obtain
           \begin{align*}
             \mathbb{E}(Y \mid X) = g(X^{T} \beta_0),
@@ -64,37 +64,30 @@
           the conditional expectation of $Y$ 
           only depends on the vector $X$
           through a single index $X^{T} \beta_0$.
-    \item The model is SEMIPARAMETRIC 
+    \item The model is semiparametric 
           when $\beta \in \mathbb{R}^{q}$ is estimated with the parametric methods
           and $g(\cdot)$ with the nonparametric methods.
-    \item Some of the PARAMETRIC single index models are really familiar with us.
+    \item Some of the parametric single index models are really familiar with us.
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Examples of Parametric Single Index Model}
   \begin{itemize}
     \item If $g(\cdot)$ is the identity function, 
-          then the model turns out to be a linear regression model:
+          then the model turns out to be \alert{a linear regression model}:
           \begin{align*}
             Y = g (X^{T} \beta_0) + u = X^{T} \beta_0 + u.
           \end{align*}
     \item If $g(\cdot)$ is the CDF of Normal$(0, 1)$,
-          then the model turns out to be a probit model.
+          then the model turns out to be \alert{a probit model}.
           \begin{itemize}
-            \item See the textbook for further discussions on a probit model.
+            \item See the textbook for further discussions on \alert{a probit model}.
           \end{itemize}
     \item If $g(\cdot)$ is the CDF of logistic distribution,
           then the model turns out to be a logistic regression model.
   \end{itemize}
   
 \end{frame}
-
-
-%%%%%目次のページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Agenda}                  
-  \tableofcontents
-\end{frame}
-%本文中に挿入するSECTION環境によって定義された目次が自動で反映される 
 
 
 \section{Identification Conditions}
@@ -219,8 +212,9 @@
               := \arg \min_{\beta} 
                     \sum_{i=1}^{n}  
                           \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
-                          w(X_i) \mathbf{1}(X_i \in A_n) := S_n(\beta).
+                          w(X_i) \mathbf{1}(X_i \in A_n) := S_n(\beta),
           \end{align*}
+          which is called \alert{Ichimura (1993)'s estimator}.
     \item  $w(X_i)$ is a nonnegative weight function.
     \item  $\mathbf{1}(X_i \in A_n)$ is a trimming function to trim out small values of 
            $\frac{1}{nh} \sum_{j \neq i} 
