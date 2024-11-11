@@ -81,10 +81,10 @@
     \item If $g(\cdot)$ is the CDF of Normal$(0, 1)$,
           then the model turns out to be \alert{a probit model}.
           \begin{itemize}
-            \item See the textbook for further discussions on \alert{a probit model}.
+            \item See the textbook for further discussions on a probit model.
           \end{itemize}
     \item If $g(\cdot)$ is the CDF of logistic distribution,
-          then the model turns out to be a logistic regression model.
+          then the model turns out to be \alert{a logistic regression model}.
   \end{itemize}
   
 \end{frame}
@@ -114,25 +114,31 @@
 
 \begin{frame}{Identification Condition (i)}
 \begin{itemize}
-  \item Note that the location and the scale of $\beta_0$ are not identified.
+  \item Note that \alert{the location and the scale of $\beta_0$ are not identified}.
   \item The vector $x$ cannot include an intercept 
         because the function $g(\cdot)$ (which is to be estimated in nonparametric manners) includes any location and level shift.
         \begin{itemize}
           \item That is, $\beta_0$ cannot contain a location parameter.
         \end{itemize}
-  \item Some normalization criterion (scale restrictions) for $\beta_0$ are needed.
-        \begin{itemize}
-          \item One approach is to set $\| \beta_0 \|$.
-          \item The second approach is to set one component of $\beta_0$ to equal one. 
-                This approach requires that 
-                the variable corresponding to the component set to equal one 
-                is continuously distributed 
-                and has a non-zero coefficient.
-          \item Then, $x$ must be dimension $2$ or larger. 
-                If $x$ is one-dimensional, then $\beta_0 \in \mathbb{R}^1$ is simply normalized to 1, 
-                and the model is the one-dimensional nonparametric regression $E(Y \mid x) = g(x)$ with no semiparametric component.
-        \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Identification Condition (i)}
+  \begin{itemize}
+    \item Some normalization criterion (scale restrictions) for $\beta_0$ are needed.
+          \begin{itemize}
+            \item One approach is to set $\| \beta_0 \|$.
+            \item The second approach is to set one component of $\beta_0$ to equal one. 
+                  This approach requires that 
+                  the variable corresponding to the component set to equal one 
+                  is continuously distributed 
+                  and has a non-zero coefficient.
+            \item Then, $x$ must be dimension $2$ or larger. 
+                  If $x$ is one-dimensional, then $\beta_0 \in \mathbb{R}^1$ is simply normalized to 1, 
+                  and the model is the one-dimensional nonparametric regression $E(Y \mid x) = g(x)$ with no semiparametric component.
+          \end{itemize}
+  \end{itemize}
+  
 \end{frame}
 
 \begin{frame}{Identification Conditions (ii) and (iii)}
@@ -209,10 +215,11 @@
           we estimate $\beta$ with
           \begin{align*}
             \hat{\beta} 
-              := \arg \min_{\beta} 
+              &:= \arg \min_{\beta} 
                     \sum_{i=1}^{n}  
                           \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
-                          w(X_i) \mathbf{1}(X_i \in A_n) := S_n(\beta),
+                          w(X_i) \mathbf{1}(X_i \in A_n) \\
+              &:= S_n(\beta),
           \end{align*}
           which is called \alert{Ichimura (1993)'s estimator}.
     \item  $w(X_i)$ is a nonnegative weight function.
