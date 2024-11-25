@@ -10,6 +10,16 @@
 \newtheorem{remark}[thm]{Remark}
 \newtheorem{question}[thm]{Question}
 \newtheorem{prob}[thm]{Problem}
+\def\Avar{\text{Avar}}
+\def\var{\text{var}}
+\def\Var{\text{Var}}
+\def\cov{\text{cov}}
+\def\Cov{\text{Cov}}
+\def\E{\mathbb{E}}
+\def\R{\mathbb{R}}
+\def\parrow{\xrightarrow{p}}
+\def\darrow{\xrightarrow{d}}
+\def\plim{\text{plim }}
 \usepackage{bbm}
 \usepackage{ascmac}
 
@@ -153,10 +163,10 @@
 \end{frame}
 
 
-\section{Estimation: Ichimura's (1993) Method}
+\section{Estimation: Ichimura's Method}
 
 
-\begin{frame}{Ichimura's (1993) Method: Semiparametric Least Squares}
+\begin{frame}{Ichimura's Method\footnote{Ichimura (1993).}}
 \begin{itemize}
   \item Suppose that the functional form of $g(\cdot)$ were known.
   \item Then we could estimate $\beta_0$ by minimizing the least-squares criterion:
@@ -166,25 +176,25 @@
         with respect to $\beta$.
   \item We could think about replacing $g(\cdot)$ with a nonparametric estimator $\hat{g}(\cdot)$.
   \item However, since $g(z)$ is the conditional mean of $Y_i$ given $X_i^{T} \beta_0 = z$,
-        $g(\cdot)$ depends on unknown $\beta_0$, so we cannot estimate $g(\cdot)$ here.
+        \alert{$g(\cdot)$ depends on unknown $\beta_0$}, so we cannot estimate $g(\cdot)$ here.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Ichimura's (1993) Method: Semiparametric Least Squares}
+\begin{frame}{Ichimura's Method}
 \begin{itemize}
-  \item Nevertheless, for a fixed value of $\beta$, we can estimate
+  \item Nevertheless, \alert{for a fixed value of $\beta$}, we can estimate
         \begin{align*}
         G(X_i^{T} \beta) 
           := \mathbb{E} (Y_i \mid X_i^{T}\beta) 
            = \mathbb{E} (g(X_i^{T}\beta) \mid X_i^{T}\beta).
         \end{align*}
   \item In general $G(X_i^{T}\beta) \neq g(X_i^{T} \beta)$.
-  \item When $\beta = \beta_0$ \footnote{Recall that $\beta_0$ is the true value of $\beta$.},
+  \item When $\beta = \beta_0$,
         it holds that $G(X_i^{T}\beta_0) = g(X_i^{T} \beta_0)$. 
 \end{itemize}  
 \end{frame}
 
-\begin{frame}{Ichimura's (1993) Method: Semiparametric Least Squares}
+\begin{frame}{Ichimura's Method}
   \begin{itemize}
   \item First, we estimate $G(X_i^{T}\beta)$  
         with the leave-one-out NW estimator:
@@ -208,7 +218,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Ichimura's (1993) Method: Semiparametric Least Squares}
+\begin{frame}{Ichimura's Method}
   \begin{itemize}
     \item Second, 
           using the leave-one-out NW estimator $\hat{G}_{-i}(X_i^{T}\beta)$,
@@ -219,26 +229,140 @@
                     \sum_{i=1}^{n}  
                           \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
                           w(X_i) \mathbf{1}(X_i \in A_n) \\
-              &:= S_n(\beta),
+              &:= \arg \min_{\beta} 
+                  S_n(\beta),
           \end{align*}
-          which is called \alert{Ichimura (1993)'s estimator}.
+          which is called \alert{Ichimura's estimator (the WSLS estimator)}.
     \item  $w(X_i)$ is a nonnegative weight function.
     \item  $\mathbf{1}(X_i \in A_n)$ is a trimming function to trim out small values of 
-           $\frac{1}{nh} \sum_{j \neq i} 
+           $\hat{p}(X_i^{T}\beta) 
+           =
+           \dfrac{1}{nh} \sum_{j \neq i} 
               K \left( \frac
                        {X_j^{T}\beta - X_i^{T}\beta}
                        {h} 
                 \right) $,
-           so that we do not suffer the random dominator problem. 
+           so that we do not suffer the random denominator problem. 
+        \begin{itemize}
+          \item $A_\delta = \{ x: p(x^{T}\beta) \geq \delta, \text{ for } ^\forall \beta \in \mathcal{B}\}$.
+          \item $A_n = \{ x: || x - x^{\star} || \leq 2h, \text{ for } ^\exists x^{\star} \in A_\delta \}$, 
+                which shrinks to $A_\delta$ as $n \to \infty$ and $h \to 0$.
+        \end{itemize}
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Ichimura's Method}
+  \begin{itemize}
+    \item Hardle, Hall and Ichimura (1993) suggest 
+          picking $\beta$ and the bandwidth $h$ jointly
+          by minimization of $S_n(\beta)$.
+    \item Further discussions on bandwidth selection follow in Section 8.4.
+  \end{itemize}
+\end{frame}
 
-\begin{frame}{Asymptotic Distribution of Ichimura's (1993) Estimator}
+\begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
 \begin{itemize}
-  \item See Theorem 8.1. for the statement on the asymptotic distribution of Ichimura's estimator.
+  \item Let $\hat{\beta}$ denote the semiparametric estimator of $\beta_0$
+        obtained from minimizing $S_n(\beta)$.
+  \item To derive the asymptotic distribution of $\hat{\beta}$, the following conditions are neeeded:
 \end{itemize}
 \end{frame}
+
+
+\begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+  \begin{itembox}[l]{Assumpution 8.1}
+    The set $A_\delta$ is compact, 
+    and the weight function $w(\cdot)$ is bounded and posotive on $A_\delta$.
+    Define the set 
+    \[D_z = \{ z: z=x^{T}\beta, \beta \in \mathcal{B}, x \in A_\delta \}.\]
+    Letting $p(\cdot)$ denote the PDF of $z \in D_z$, 
+    $p(\cdot)$ is bounded below by a positive constant for $^\forall z \in D_z$
+  \end{itembox}
+  \begin{itembox}[l]{Assumpution 8.2}
+    $g(\cdot)$ and $p(\cdot)$ are 3 times differentiable w.r.t. $z=x^{\beta}$.
+    The third derivatives are Lipschitz continuous uniformly over $\mathcal{B}$
+    for $^{\forall} z \in D_z$. 
+  \end{itembox}
+\end{frame}
+
+\begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+  \begin{itembox}[l]{Assumpution 8.3} 
+    The kernel function is a bounded second order kernel, which has bounded support;
+    is twice differentiable; 
+    and its second derivative is Lipschitz continuous.
+  \end{itembox}
+  \begin{itembox}[l]{Assumpution 8.4}
+    $\E(|Y^m|) < \infty$ for $^{\exists} m \geq 3$.
+    $\var(Y \mid x)$ is bounded and 
+    bounded away from zero for $^{\forall} x \in A_\delta$. 
+    $\frac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
+    $ nh^8 \to 0$ as $n \to \infty$.
+  \end{itembox}
+\end{frame}
+
+\begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+\textbf{Theorem 8.1.} Under assumptions 8.1 through 8.4,
+    \[ \sqrt{n}(\hat{\beta} - \beta_0)
+      \darrow \text{Normal} (0, \Omega_I),
+    \]
+with
+  \begin{align*}
+    \Omega_I &= V^{-1} \Sigma V^{-1}, \\
+    V &= \E\{
+      w(X_i) (g_i^{(1)})^2 \\
+      & \times (X_i - E_A(X_i\mid X_i^T \beta_0)) (X_i - E_A(X_i\mid X_i^T \beta_0))^T 
+    \}, \\
+    \Sigma &= \E \{
+      w(X_i) \sigma^2(X_i) (g_i^{(1)})^2 \\
+      & \times (X_i - E_A(X_i\mid X_i^T \beta_0)) (X_i - E_A(X_i\mid X_i^T \beta_0))^T 
+    \},
+  \end{align*}
+  where
+  \begin{itemize}
+    \item $(g_i^{(1)}) = \frac{\partial g(v)}{\partial v}\mid_{v= X_i^T \beta_0}$,
+    \item $\E_A (X_i\mid v) = \E(X_i \mid x_A^T\beta_0 = v)$,
+    \item $x_A$ has the distribution of $X_i$ conditional on $X_i \in A_\delta$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+\begin{itemize}
+  \item See Ichimura (1993); and Hardle, Hall and Ichimura (1993) for the proof of \textbf{Theorem 8.1}.
+      \begin{itemize}
+        \item Horowitz (1998) provides an excellent heuristic outline for proving \textbf{Theorem 8.1}, 
+              using only the familiar Taylor series methods, the standard LLN, and the Lindeberg-Levy CLT.
+      \end{itemize}
+  \item We can consistently estimate 
+        $\Avar\left(\sqrt{n}(\hat{\beta} - \beta)\right) = \Omega_I$ 
+        with its sample analogue.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Optimal Weight under the Homoscedasticity Assumption}
+\begin{itemize}
+  \item Here we introduce the following homoscedasticity assumpution:
+        $\E(u_i^2 \mid X_i) = \sigma^2$.
+  \item Under this assumpution, the optimal choice of $w(\cdot)$ is $w(X_i)=1$.
+  \item In this case, 
+        \[ \hat{\beta} = \arg\min_{\beta} \sum_{i=1}^{n} (Y_i - \hat{G}_{-i}(X_i^{T}\beta)^2)\mathbf{1}(X_i \in A_n) \]
+        is \alert{semiparametrically efficient} in the sense that 
+        $\Omega_I$ is \alert{the semiparametric variance lower bound} (conditional on $X \in A_\delta$).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Optomal Weight under Heteroscedasticity}
+  \begin{itemize}
+    \item In general, $\E(u_i^2 \mid X_i) = \sigma^2(X_i)$.
+      \begin{itemize}
+        \item The semiparametrically efficient estimator $\hat{\beta}_{opt}$ has a complicated structure.
+      \end{itemize}
+    \item \alert{An infeasible case}: 
+          If one assues that  $\E(u_i^2 \mid X_i) = \sigma^2(X_i^{T}\beta_0)$,
+          that is, the conditional variance depends only on the single index $X_i^{T}\beta_0$,
+          the choice of $w(X_i) = \frac{1}{\sigma^2_{X_i^{T}\beta_0}}$ can lead to a semiparametrically efficient estimation.
+  \end{itemize}
+\end{frame}
+
 
 
 \section{Direct Semiparametric Estimators for $\beta$}
@@ -345,6 +469,14 @@
 
 \begin{frame}{References (1)}
   \begin{itemize}
+    \item Hardle, W, P. Hall and H. Ichimura (1993)
+          ``Optimal Smoothing in Single-Index Models,'' \textit{Annals of Statistics,} 21, 157-178.
+    \item Horowitz, J.L. (1998)
+          \textit{Semiparametric Methods in Econometrics,}
+          Springer.
+    \item Ichimura, H. (1993) 
+          ``Semiparametric Least Squares (SLS) and Weighted SLS Estimation of Single-Index Models,''
+          \textit{Journal of Econometrics,} 3, 205-228. 
     \item Li, Q. and J. S. Racine, (2007). 
           \textit{Nonparametric Econometrics: Theory and Practice,} 
           Princeton University Press.
