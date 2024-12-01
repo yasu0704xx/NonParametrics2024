@@ -28,8 +28,8 @@
 \usepackage{bbm}
 \usepackage{ascmac}
 
-%ナビゲーションバー
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%ナビゲーションバー%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\useoutertheme{miniframes}
 %\setbeamertemplate{headline}[miniframes theme]
 %\setbeamertemplate{mini frames}[circle]
@@ -45,15 +45,15 @@
 \begin{document} 
 
 %%%%%講演に関する情報%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[Li and Racine (2007, Chapter 8)]{Semiparametric Single Index Models} 
-\author[Y. Matsumura]{Yasuyuki Matsumura}          
-\institute[]{Graduate School of Economics, Kyoto University} 
-\date{\today}
-
+\title{Semiparametric Single Index Models} 
+\subtitle{Li and Racine (2007, Chapter 8)}
+\author{Yasuyuki Matsumura}
+\institute{Graduate School of Economics, Kyoto University}
+\date{\today} % 日付を自動で挿入
 
 %%%%%タイトルページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}                  
-\titlepage                     
+\titlepage            
 \end{frame}
 
 
@@ -117,10 +117,7 @@
 \end{frame}
 
 \begin{frame}{TOC}
-
-
 \tableofcontents
-
 \end{frame}
 
 \section{Identification Conditions}
@@ -160,7 +157,7 @@
   \begin{itemize}
     \item Some normalization criterion (scale restrictions) for $\beta_0$ are needed.
           \begin{itemize}
-            \item One approach is to set $\| \beta_0 \|$.
+            \item One approach is to set $\| \beta_0 \| =1$.
             \item The second approach is to set one component of $\beta_0$ to equal one. 
                   This approach requires that 
                   the variable corresponding to the component set to equal one 
@@ -343,13 +340,8 @@
   \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
   \begin{itemize}
     \item See Ichimura (1993); and Hardle, Hall and Ichimura (1993) for the proof of \textbf{Theorem 8.1}.
-        \begin{itemize}
-          \item Horowitz (2009) provides an excellent heuristic outline for proving \textbf{Theorem 8.1}, 
-                using only the familiar Taylor series methods, the standard LLN, and the Lindeberg-Levy CLT.
-        \end{itemize}
-    \item We can consistently estimate 
-          $\Avar\left(\sqrt{n}(\hat{\beta} - \beta)\right) = \Omega_I$ 
-          with its sample analogue.
+    \item Horowitz (2009) provides an excellent heuristic outline for proving \textbf{Theorem 8.1}, 
+          using only the familiar Taylor series methods, the standard LLN, and the Lindeberg-Levy CLT.
   \end{itemize}
   \end{frame}
   
@@ -371,9 +363,6 @@
   \begin{frame}{Optimal Weight under Heteroscedasticity}
     \begin{itemize}
       \item In general, $\E(u_i^2 \mid X_i) = \sigma^2(X_i)$.
-        \begin{itemize}
-          \item The semiparametrically efficient estimator $\hat{\beta}_{opt}$ has a complicated structure.
-        \end{itemize}
       \item \alert{An infeasible case}: 
             If one assues that  $\E(u_i^2 \mid X_i) = \sigma^2(X_i^{T}\beta_0)$,
             that is, the conditional variance depends only on the single index $X_i^{T}\beta_0$,
@@ -384,41 +373,23 @@
   
   \begin{frame}{A two-step procedure to Choose Optimal Weight}
     \begin{itemize}
-      \item Suppose that the conditional variance is a function of $X_i^{T}\beta_0: \sigma^2({X_i^{T}\beta_0}).$
-      \item \alert{The first step}: Use $w(X_i)=1$ to obtain a $\sqrt{n}$ consistent estimator of $\beta_0$.
+      \item Suppose that the conditional variance is a function of $X_i^{T}\beta_0$ (Let $\sigma^2({X_i^{T}\beta_0})$ denote it).
+      \item \alert{The first step}: Use $w(X_i)=1$ to obtain a $\sqrt{n}$-consistent estimator of $\beta_0$.
         
       \item Let $\tilde{\beta}_0$ denote the estimator of $\beta_0$, 
-            and $\tilde{u}_i = Y_i - \hat{g}$ denote the residual obtained from $\tilde{\beta}_0$
-      \item \alert{The second step}:
-    \end{itemize}
-  \end{frame}
-  
-  \begin{frame}{Proof of Theorem 8.1}
-    \begin{itemize}
-      \item The slides for the proof of Theorem 8.1 
-            are associated with Horowitz (2009, Chapter 2).
-      \item Recall that the least squares criterion is that
+            and $\tilde{u}_i = Y_i - \hat{g}$ denote the residual obtained from $\tilde{\beta}_0$.
+      \item We can obtain a consistent nonparametric estimator of the conditional variance: $\hat{\sigma}^2({X_i^{T}\beta_0})$.
+      \item \alert{The second step}: Estimate $\beta_0$ again using $w(X_i)= \frac{1}{\hat{\sigma}^2({X_i^{T}\beta_0})}$:
             \begin{align*}
+              \hat{\beta}_0 = 
+              \arg \min_{\beta} 
               \sum_{i=1}^{n}  
-              \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
-              w(X_i) \mathbf{1}(X_i \in A_n).
+                    \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
+                    \frac{1}{\hat{\sigma}^2({X_i^{T}\beta_0})} \mathbf{1}(X_i \in A_n).
             \end{align*}
-      \item Hardle, Hall and Ichimura (1993) show that this criterion 
-            is asymptotically equivalent to the following criterion:
-            \begin{align*}
-              \sum_{i=1}^{n}  
-              \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
-              w(X_i),
-            \end{align*}
-            which does not have the trimming function $\mathbf{1}(\cdot)$.
-    \end{itemize}
-  \end{frame}
-  
-  \begin{frame}{Proof of Theorem 8.1}
-    \begin{itemize}
-      \item 
-  
-  
+      \item The estimator $\hat{\beta}_0$ is semiparametrically efficient because
+            $\hat{\sigma}^2(v) - \sigma^2(v)$ converges to zero at a particular rate 
+            uniformly over $v \in D_v$ ($D_v$ is the support of $X_i^{T}\beta_0$).
     \end{itemize}
   \end{frame}
   
