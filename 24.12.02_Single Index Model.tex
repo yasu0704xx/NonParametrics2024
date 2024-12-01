@@ -1,0 +1,565 @@
+\documentclass[xcolor=svgnames,dvipdfmx,cjk]{beamer} 
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} 
+\usetheme[progressbar=frametitle]{metropolis}
+\setbeamertemplate{headline}[miniframes]
+\setbeamercolor{background canvas}{bg=Snow} 
+\setbeamercolor{frametitle}{fg=white, bg=gray!40!black}  
+\setbeamercolor{section in head/foot}{fg=pink!70!red, bg=gray!30!black}
+\setbeamercolor{alerted text}{fg=orange!50!red} 
+\usefonttheme{professionalfonts}
+\setbeamertemplate{theorems}[numbered]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{proposition}[thm]{Proposition}
+\theoremstyle{example}
+\newtheorem{exam}[thm]{Example}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{question}[thm]{Question}
+\newtheorem{prob}[thm]{Problem}
+\def\Avar{\text{Avar}}
+\def\var{\text{var}}
+\def\Var{\text{Var}}
+\def\cov{\text{cov}}
+\def\Cov{\text{Cov}}
+\def\E{\mathbb{E}}
+\def\R{\mathbb{R}}
+\def\parrow{\xrightarrow{p}}
+\def\darrow{\xrightarrow{d}}
+\def\plim{\text{plim }}
+\usepackage{bbm}
+\usepackage{ascmac}
+
+%ナビゲーションバー
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\useoutertheme{miniframes}
+%\setbeamertemplate{headline}[miniframes theme]
+%\setbeamertemplate{mini frames}[circle]
+
+%\setbeamertemplate{headline}
+%{%
+%  \begin{beamercolorbox}{section in head/foot}
+%    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+%  \end{beamercolorbox}%
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document} 
+
+%%%%%講演に関する情報%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Li and Racine (2007, Chapter 8)]{Semiparametric Single Index Models} 
+\author[Y. Matsumura]{Yasuyuki Matsumura}          
+\institute[]{Graduate School of Economics, Kyoto University} 
+\date{\today}
+
+
+%%%%%タイトルページ%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}                  
+\titlepage                     
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Before showwing the contents of the slides...
+
+\begin{frame}{Introduction}
+  \begin{itemize}
+    \item  \alert{A semiparametric single index model} is given by 
+            \begin{align*}
+              Y = g (X^{T} \beta_0) + u,
+            \end{align*}
+           where  
+            \begin{align*}
+              & Y \in \mathbb{R}: \text{a dependent variable}, \\
+              & X \in \mathbb{R}^{q}: \text{a }  q \times 1 \text{ explanatory vector}, \\
+              & \beta_0 \in \mathbb{R}^{q}: \text{a }  q \times 1 \text{ vector of unknown parameters}, \\
+              & u \in \mathbb{R}: \text{an error term which satisfies } \mathbb{E}(u \mid X) =0, \\
+              & g(\cdot): \text{an unknown distribution function}.
+            \end{align*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Introduction}
+  \begin{itemize}
+    \item Even though $x$ is a $q\times1$ vector, 
+          $x^{T} \beta_0$ is a scalar of a single linear combination, 
+          which is called \alert{a single index}.
+    \item By the form of the single index model, we obtain
+          \begin{align*}
+            \mathbb{E}(Y \mid X) = g(X^{T} \beta_0),
+          \end{align*}
+          which means that 
+          the conditional expectation of $Y$ 
+          only depends on the vector $X$
+          through a single index $X^{T} \beta_0$.
+    \item The model is semiparametric 
+          when $\beta \in \mathbb{R}^{q}$ is estimated with the parametric methods
+          and $g(\cdot)$ with the nonparametric methods.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Examples of Parametric Single Index Model}
+  \begin{itemize}
+    \item If $g(\cdot)$ is the identity function, 
+          then the model turns out to be \alert{a linear regression model}:
+          \begin{align*}
+            Y = g (X^{T} \beta_0) + u = X^{T} \beta_0 + u.
+          \end{align*}
+    \item If $g(\cdot)$ is the CDF of Normal$(0, 1)$,
+          then the model turns out to be \alert{a probit model}.
+          \begin{itemize}
+            \item See the textbook for further discussions on a probit model.
+          \end{itemize}
+    \item If $g(\cdot)$ is the CDF of logistic distribution,
+          then the model turns out to be \alert{a logistic regression model}.
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}{TOC}
+
+
+\tableofcontents
+
+\end{frame}
+
+\section{Identification Conditions}
+
+\begin{frame}{Identification Conditions}
+  \begin{itembox}[l]{Proposition 8.1 (Identification of a Single Index Model)}
+    \quad 
+    For the semiparametric single index model $Y = g(x^{T} \beta_0) + u$,
+    identification of $\beta_0$ and $g(\cdot)$ requires that
+    \begin{itemize}
+      \item (i)
+            $x$ should not contain a constant/an intercept, 
+            and must contain at least one continuous variable.
+            Moreover, $\|\beta_0\|$=1.
+      \item (ii)
+            $g(\cdot)$ is differentiable 
+            and is not a constant function on the support of $x^{T}\beta_0$.
+      \item (iii)
+            For the discrete components of $x$, 
+            varying the values of the discrete variables will not divide the support of $x^{T}\beta_0$ into disjoint subsets.
+    \end{itemize}
+  \end{itembox}
+\end{frame}
+
+\begin{frame}{Identification Condition (i)}
+\begin{itemize}
+  \item Note that \alert{the location and the scale of $\beta_0$ are not identified}.
+  \item The vector $x$ cannot include an intercept 
+        because the function $g(\cdot)$ (which is to be estimated in nonparametric manners) includes any location and level shift.
+        \begin{itemize}
+          \item That is, $\beta_0$ cannot contain a location parameter.
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Identification Condition (i)}
+  \begin{itemize}
+    \item Some normalization criterion (scale restrictions) for $\beta_0$ are needed.
+          \begin{itemize}
+            \item One approach is to set $\| \beta_0 \|$.
+            \item The second approach is to set one component of $\beta_0$ to equal one. 
+                  This approach requires that 
+                  the variable corresponding to the component set to equal one 
+                  is continuously distributed 
+                  and has a non-zero coefficient.
+            \item Then, $x$ must be dimension $2$ or larger. 
+                  If $x$ is one-dimensional, then $\beta_0 \in \mathbb{R}^1$ is simply normalized to 1, 
+                  and the model is the one-dimensional nonparametric regression $E(Y \mid x) = g(x)$ with no semiparametric component.
+          \end{itemize}
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Identification Conditions (ii) and (iii)}
+\begin{itemize}
+  \item The function $g(\cdot)$ cannot be a constant function and must be differentiable on the support of $x^{T}\beta_0$.
+  \item $x$ must contain at least one continuously distributed variable
+        and this continuous variable must have non-zero coefficient.
+        \begin{itemize}
+          \item  If not, $x^{T} \beta_0$ only takes a discrete set of values and it would be impossible to identify a continuous function $g(\cdot)$ on this discrete support.
+        \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\section{Ichimura's (1993) Method}
+
+
+\begin{frame}{Ichimura's Method}
+\begin{itemize}
+  \item Textbook: Sections 8.2; 8.4.1; and 8.12.
+  \item Suppose that the functional form of $g(\cdot)$ were known.
+  \item Then we could estimate $\beta_0$ by minimizing the least-squares criterion:
+        \begin{align*}
+        \sum_{i=1} \left[ Y_i - g(X_i^{T}\beta) \right]^2
+        \end{align*}
+        with respect to $\beta$.
+  \item We could think about replacing $g(\cdot)$ with a nonparametric estimator $\hat{g}(\cdot)$.
+  \item However, since $g(z)$ is the conditional mean of $Y_i$ given $X_i^{T} \beta_0 = z$,
+        \alert{$g(\cdot)$ depends on unknown $\beta_0$}, so we cannot estimate $g(\cdot)$ here.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ichimura's Method}
+\begin{itemize}
+  \item Nevertheless, \alert{for a fixed value of $\beta$}, we can estimate
+        \begin{align*}
+        G(X_i^{T} \beta) 
+          := \mathbb{E} (Y_i \mid X_i^{T}\beta) 
+           = \mathbb{E} (g(X_i^{T}\beta) \mid X_i^{T}\beta).
+        \end{align*}
+  \item In general $G(X_i^{T}\beta) \neq g(X_i^{T} \beta)$.
+  \item When $\beta = \beta_0$,
+        it holds that $G(X_i^{T}\beta_0) = g(X_i^{T} \beta_0)$. 
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Ichimura's Method}
+  \begin{itemize}
+  \item First, we estimate $G(X_i^{T}\beta)$  
+        with the leave-one-out NW estimator:
+        \begin{align*}
+          \hat{G}_{-i}(X_i^{T}\beta) 
+              :&= \hat{\mathbb{E}}_{-i}(Y_i \mid X_i^{T} \beta) \\
+               &= \frac
+                  {\sum_{j \neq i} Y_j 
+                   K \left( \frac
+                            {X_j^{T}\beta - X_i^{T}\beta}
+                            {h} 
+                     \right) 
+                  }
+                  {\sum_{j \neq i} 
+                   K \left( \frac
+                           {X_j^{T}\beta - X_i^{T}\beta}
+                           {h} 
+                     \right) 
+                  }.
+        \end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Ichimura's Method}
+  \begin{itemize}
+    \item Second, 
+          using the leave-one-out NW estimator $\hat{G}_{-i}(X_i^{T}\beta)$,
+          we estimate $\beta$ with
+          \begin{align*}
+            \hat{\beta} 
+              &:= \arg \min_{\beta} 
+                    \sum_{i=1}^{n}  
+                          \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
+                          w(X_i) \mathbf{1}(X_i \in A_n) \\
+              &:= \arg \min_{\beta} 
+                  S_n(\beta),
+          \end{align*}
+          which is called \alert{Ichimura's estimator (the WSLS estimator)}.
+    \item  $w(X_i)$ is a nonnegative weight function.
+    \item  $\mathbf{1}(X_i \in A_n)$ is a trimming function to trim out small values of 
+           $\hat{p}(X_i^{T}\beta) 
+           =
+           \dfrac{1}{nh} \sum_{j \neq i} 
+              K \left( \frac
+                       {X_j^{T}\beta - X_i^{T}\beta}
+                       {h} 
+                \right) $,
+           so that we do not suffer the random denominator problem. 
+        \begin{itemize}
+          \item $A_\delta = \{ x: p(x^{T}\beta) \geq \delta, \text{ for } ^\forall \beta \in \mathcal{B}\}$.
+          \item $A_n = \{ x: || x - x^{\star} || \leq 2h, \text{ for } ^\exists x^{\star} \in A_\delta \}$, 
+                which shrinks to $A_\delta$ as $n \to \infty$ and $h \to 0$.
+        \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+  \begin{itemize}
+    \item Let $\hat{\beta}$ denote the semiparametric estimator of $\beta_0$
+          obtained from minimizing $S_n(\beta)$.
+    \item To derive the asymptotic distribution of $\hat{\beta}$, the following conditions are neeeded:
+  \end{itemize}
+  \end{frame}
+  
+  
+  \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+    \begin{itembox}[l]{Assumpution 8.1}
+      The set $A_\delta$ is compact, 
+      and the weight function $w(\cdot)$ is bounded and posotive on $A_\delta$.
+      Define the set 
+      \[D_z = \{ z: z=x^{T}\beta, \beta \in \mathcal{B}, x \in A_\delta \}.\]
+      Letting $p(\cdot)$ denote the PDF of $z \in D_z$, 
+      $p(\cdot)$ is bounded below by a positive constant for $^\forall z \in D_z$
+    \end{itembox}
+    \begin{itembox}[l]{Assumpution 8.2}
+      $g(\cdot)$ and $p(\cdot)$ are 3 times differentiable w.r.t. $z=x^{\beta}$.
+      The third derivatives are Lipschitz continuous uniformly over $\mathcal{B}$
+      for $^{\forall} z \in D_z$. 
+    \end{itembox}
+  \end{frame}
+  
+  \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+    \begin{itembox}[l]{Assumpution 8.3} 
+      The kernel function is a bounded second order kernel, which has bounded support;
+      is twice differentiable; 
+      and its second derivative is Lipschitz continuous.
+    \end{itembox}
+    \begin{itembox}[l]{Assumpution 8.4}
+      $\E(|Y^m|) < \infty$ for $^{\exists} m \geq 3$.
+      $\var(Y \mid x)$ is bounded and 
+      bounded away from zero for $^{\forall} x \in A_\delta$. 
+      $\frac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
+      $ nh^8 \to 0$ as $n \to \infty$.
+    \end{itembox}
+  \end{frame}
+  
+  \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+  \textbf{Theorem 8.1.} Under assumptions 8.1 through 8.4,
+      \[ \sqrt{n}(\hat{\beta} - \beta_0)
+        \darrow \text{Normal} (0, \Omega_I),
+      \]
+  with
+    \begin{align*}
+      \Omega_I &= V^{-1} \Sigma V^{-1}, \\
+      V &= \E\{
+        w(X_i) (g_i^{(1)})^2 \\
+        & \times (X_i - E_A(X_i\mid X_i^T \beta_0)) (X_i - E_A(X_i\mid X_i^T \beta_0))^T 
+      \}, \\
+      \Sigma &= \E \{
+        w(X_i) \sigma^2(X_i) (g_i^{(1)})^2 \\
+        & \times (X_i - E_A(X_i\mid X_i^T \beta_0)) (X_i - E_A(X_i\mid X_i^T \beta_0))^T 
+      \},
+    \end{align*}
+    where
+    \begin{itemize}
+      \item $(g_i^{(1)}) = \frac{\partial g(v)}{\partial v}\mid_{v= X_i^T \beta_0}$,
+      \item $\E_A (X_i\mid v) = \E(X_i \mid x_A^T\beta_0 = v)$,
+      \item $x_A$ has the distribution of $X_i$ conditional on $X_i \in A_\delta$.
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
+  \begin{itemize}
+    \item See Ichimura (1993); and Hardle, Hall and Ichimura (1993) for the proof of \textbf{Theorem 8.1}.
+        \begin{itemize}
+          \item Horowitz (2009) provides an excellent heuristic outline for proving \textbf{Theorem 8.1}, 
+                using only the familiar Taylor series methods, the standard LLN, and the Lindeberg-Levy CLT.
+        \end{itemize}
+    \item We can consistently estimate 
+          $\Avar\left(\sqrt{n}(\hat{\beta} - \beta)\right) = \Omega_I$ 
+          with its sample analogue.
+  \end{itemize}
+  \end{frame}
+  
+  
+  \begin{frame}{Optimal Weight under the Homoscedasticity Assumption}
+  \begin{itemize}
+    \item We introduce the following homoscedasticity assumpution:
+          \begin{align*}
+            \E(u_i^2 \mid X_i) = \sigma^2.
+          \end{align*}
+    \item Under this assumpution, the optimal choice of $w(\cdot)$ is $w(X_i)=1$.
+    \item In this case, 
+          \[ \hat{\beta} = \arg\min_{\beta} \sum_{i=1}^{n} (Y_i - \hat{G}_{-i}(X_i^{T}\beta)^2)\mathbf{1}(X_i \in A_n) \]
+          is \alert{semiparametrically efficient} in the sense that 
+          $\Omega_I$ is \alert{the semiparametric variance lower bound} (conditional on $X \in A_\delta$).
+  \end{itemize}
+  \end{frame}
+  
+  \begin{frame}{Optimal Weight under Heteroscedasticity}
+    \begin{itemize}
+      \item In general, $\E(u_i^2 \mid X_i) = \sigma^2(X_i)$.
+        \begin{itemize}
+          \item The semiparametrically efficient estimator $\hat{\beta}_{opt}$ has a complicated structure.
+        \end{itemize}
+      \item \alert{An infeasible case}: 
+            If one assues that  $\E(u_i^2 \mid X_i) = \sigma^2(X_i^{T}\beta_0)$,
+            that is, the conditional variance depends only on the single index $X_i^{T}\beta_0$,
+            the choice of $w(X_i) = \frac{1}{\sigma^2({X_i^{T}\beta_0})}$ can lead to a semiparametrically efficient estimation.
+      \item We could adopt a two-step procedure as follows.
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}{A two-step procedure to Choose Optimal Weight}
+    \begin{itemize}
+      \item Suppose that the conditional variance is a function of $X_i^{T}\beta_0: \sigma^2({X_i^{T}\beta_0}).$
+      \item \alert{The first step}: Use $w(X_i)=1$ to obtain a $\sqrt{n}$ consistent estimator of $\beta_0$.
+        
+      \item Let $\tilde{\beta}_0$ denote the estimator of $\beta_0$, 
+            and $\tilde{u}_i = Y_i - \hat{g}$ denote the residual obtained from $\tilde{\beta}_0$
+      \item \alert{The second step}:
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}{Proof of Theorem 8.1}
+    \begin{itemize}
+      \item The slides for the proof of Theorem 8.1 
+            are associated with Horowitz (2009, Chapter 2).
+      \item Recall that the least squares criterion is that
+            \begin{align*}
+              \sum_{i=1}^{n}  
+              \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
+              w(X_i) \mathbf{1}(X_i \in A_n).
+            \end{align*}
+      \item Hardle, Hall and Ichimura (1993) show that this criterion 
+            is asymptotically equivalent to the following criterion:
+            \begin{align*}
+              \sum_{i=1}^{n}  
+              \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
+              w(X_i),
+            \end{align*}
+            which does not have the trimming function $\mathbf{1}(\cdot)$.
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}{Proof of Theorem 8.1}
+    \begin{itemize}
+      \item 
+  
+  
+    \end{itemize}
+  \end{frame}
+  
+  
+  \begin{frame}{Bandwidth Selection for Ichimura's Method}
+    \begin{itemize}
+      \item Hardle, Hall and Ichimura (1993) suggest 
+            picking $\beta$ and the bandwidth $h$ jointly
+            by minimization of $S_n(\beta)$.
+    \end{itemize}
+  \end{frame}
+  
+  
+  
+  \section{Direct Semiparametric Estimators for $\beta$}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Klein and Spady's (1993) Estimator}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Lewbel's (2000) Estimator}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Manski's (1975) Maximum Score Estimator}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Horowitz's (1992) Smoothed Maximum Score Estimator}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Han's (1987) Maximum Rank Estimator}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Multinomial Discrete Choice Models}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  \section{Ai's (1997) Semiparametric Maximum Likelihood Approach}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+  \section{References}
+  
+  
+  \begin{frame}{References (1)}
+    \begin{itemize}
+      \item Hardle, W, P. Hall and H. Ichimura (1993)
+            ``Optimal Smoothing in Single-Index Models,'' \textit{Annals of Statistics,} 21, 157-178.
+      \item Horowitz, J. L. (2009)
+            \textit{Semiparametric and Nonparametric Methods in Econometrics,}
+            Springer.
+      \item Ichimura, H. (1993) 
+            ``Semiparametric Least Squares (SLS) and Weighted SLS Estimation of Single-Index Models,''
+            \textit{Journal of Econometrics,} 3, 205-228. 
+      \item Li, Q. and J. S. Racine, (2007). 
+            \textit{Nonparametric Econometrics: Theory and Practice,} 
+            Princeton University Press.
+      \item 末石直也 (2024) 『データ駆動型回帰分析：計量経済学と機械学習の融合』日本評論社．
+      \item 西山慶彦，人見光太郎 (2023) 『ノン・セミパラメトリック統計解析（理論統計学教程：数理統計の枠組み）』共立出版．
+    \end{itemize}
+  \end{frame}
+
+
+\begin{frame}{References (2)}
+\quad 
+Useful references also include some lecture notes of the following topic courses:
+  \begin{itemize}
+    \item ECON 718 NonParametric Econometrics (Bruce Hansen, Spring 2009, University of Wisconsin-Madison),
+    \item セミノンパラメトリック計量分析（末石直也，2014年度後期，京都大学）．
+  \end{itemize}
+\end{frame}
+
+\end{document}
