@@ -120,6 +120,10 @@
 \tableofcontents
 \end{frame}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Identification Conditions}
 
 \begin{frame}{Identification Conditions}
@@ -182,7 +186,9 @@
 \end{itemize}
 \end{frame}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ichimura's (1993) Method}
 
 
@@ -282,7 +288,7 @@
   
   
   \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
-    \begin{itembox}[l]{Assumpution 8.1}
+    \begin{itembox}[l]{Assumption 8.1}
       The set $A_\delta$ is compact, 
       and the weight function $w(\cdot)$ is bounded and posotive on $A_\delta$.
       Define the set 
@@ -290,7 +296,7 @@
       Letting $p(\cdot)$ denote the PDF of $z \in D_z$, 
       $p(\cdot)$ is bounded below by a positive constant for $^\forall z \in D_z$
     \end{itembox}
-    \begin{itembox}[l]{Assumpution 8.2}
+    \begin{itembox}[l]{Assumption 8.2}
       $g(\cdot)$ and $p(\cdot)$ are 3 times differentiable w.r.t. $z=x^{\beta}$.
       The third derivatives are Lipschitz continuous uniformly over $\mathcal{B}$
       for $^{\forall} z \in D_z$. 
@@ -298,12 +304,12 @@
   \end{frame}
   
   \begin{frame}{Asymptotic Distribution of Ichimura's Estimator}
-    \begin{itembox}[l]{Assumpution 8.3} 
+    \begin{itembox}[l]{Assumption 8.3} 
       The kernel function is a bounded second order kernel, which has bounded support;
       is twice differentiable; 
       and its second derivative is Lipschitz continuous.
     \end{itembox}
-    \begin{itembox}[l]{Assumpution 8.4}
+    \begin{itembox}[l]{Assumption 8.4}
       $\E(|Y^m|) < \infty$ for $^{\exists} m \geq 3$.
       $\var(Y \mid x)$ is bounded and 
       bounded away from zero for $^{\forall} x \in A_\delta$. 
@@ -348,11 +354,11 @@
   
   \begin{frame}{Optimal Weight under the Homoscedasticity Assumption}
   \begin{itemize}
-    \item We introduce the following homoscedasticity assumpution:
+    \item We introduce the following homoscedasticity assumption:
           \begin{align*}
             \E(u_i^2 \mid X_i) = \sigma^2.
           \end{align*}
-    \item Under this assumpution, the optimal choice of $w(\cdot)$ is $w(X_i)=1$.
+    \item Under this assumption, the optimal choice of $w(\cdot)$ is $w(X_i)=1$.
     \item In this case, 
           \[ \hat{\beta} = \arg\min_{\beta} \sum_{i=1}^{n} (Y_i - \hat{G}_{-i}(X_i^{T}\beta)^2)\mathbf{1}(X_i \in A_n) \]
           is \alert{semiparametrically efficient} in the sense that 
@@ -396,19 +402,40 @@
   
   \begin{frame}{Bandwidth Selection for Ichimura's Method}
     \begin{itemize}
+      \item Recall that we assume in Assumption 8.4 that 
+            $\frac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
+            $ nh^8 \to 0$ as $n \to \infty$, 
+            where $m \geq 3$ is a a positive integer 
+            whose specific value depends on the existence of the number of finite moments of $Y$ 
+            along with the smoothness of the unknown function $g(\cdot)$.
+      \item The range of permissive smoothing parameters allows for optimal smoothing, i.e., 
+            $h=O(n^{-\frac{1}{5}})$.
+      \item Our aim is to choose $\hat{\beta}$ close to $\beta_0$, 
+            and $h$ close to the value $h_0$ 
+            which minimizes the average of 
+            $ \E\{ \hat{g}(X_i^{T}\beta_0 \mid X_i^{T}\beta_0) - g(X_i^{T}\beta_0) \}^2 $.
       \item Hardle, Hall and Ichimura (1993) suggest 
             picking $\beta$ and the bandwidth $h$ jointly
             by minimization of $S_n(\beta)$.
+      \item Further discussions follow in Section 8.4.
     \end{itemize}
   \end{frame}
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Direct Semiparametric Estimators for $\beta$}
   
-  \section{Direct Semiparametric Estimators for $\beta$}
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bandwidth Selection}
   
+
   
   
   
@@ -416,6 +443,10 @@
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\section{Klein and Spady's (1993) Estimator}
   
   
   
@@ -424,7 +455,10 @@
   
   
   
-  \section{Klein and Spady's (1993) Estimator}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\section{Lewbel's (2000) Estimator}
   
   
   
@@ -434,7 +468,10 @@
   
   
   
-  \section{Lewbel's (2000) Estimator}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\section{Manski's (1975) Maximum Score Estimator}
   
   
   
@@ -443,9 +480,12 @@
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\section{Horowitz's (1992) Smoothed Maximum Score Estimator}
   
   
-  \section{Manski's (1975) Maximum Score Estimator}
   
   
   
@@ -454,8 +494,11 @@
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Han's (1987) Maximum Rank Estimator}
   
-  \section{Horowitz's (1992) Smoothed Maximum Score Estimator}
   
   
   
@@ -464,48 +507,39 @@
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Multinomial Discrete Choice Models}
   
   
   
-  \section{Han's (1987) Maximum Rank Estimator}
   
   
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ai's (1997) Semiparametric Maximum Likelihood Approach}
   
   
   
   
   
-  \section{Multinomial Discrete Choice Models}
   
   
   
   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
+\section{References}
   
   
-  
-  
-  \section{Ai's (1997) Semiparametric Maximum Likelihood Approach}
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  \section{References}
-  
-  
-  \begin{frame}{References (1)}
+\begin{frame}{References (1)}
     \begin{itemize}
       \item Hardle, W, P. Hall and H. Ichimura (1993)
             ``Optimal Smoothing in Single-Index Models,'' \textit{Annals of Statistics,} 21, 157-178.
@@ -521,7 +555,7 @@
       \item 末石直也 (2024) 『データ駆動型回帰分析：計量経済学と機械学習の融合』日本評論社．
       \item 西山慶彦，人見光太郎 (2023) 『ノン・セミパラメトリック統計解析（理論統計学教程：数理統計の枠組み）』共立出版．
     \end{itemize}
-  \end{frame}
+\end{frame}
 
 
 \begin{frame}{References (2)}
