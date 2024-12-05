@@ -213,11 +213,12 @@
         \begin{align*}
         G(X_i^{T} \beta) 
           := \mathbb{E} (Y_i \mid X_i^{T}\beta) 
-           = \mathbb{E} (g(X_i^{T}\beta) \mid X_i^{T}\beta).
+           = \mathbb{E} (g(X_i^{T}\beta_0) \mid X_i^{T}\beta).
         \end{align*}
   \item In general $G(X_i^{T}\beta) \neq g(X_i^{T} \beta)$.
   \item When $\beta = \beta_0$,
-        it holds that $G(X_i^{T}\beta_0) = g(X_i^{T} \beta_0)$. 
+        it holds that $G(X_i^{T}\beta_0) = g(X_i^{T} \beta_0)$.
+        \footnote{一般の$\beta$を用いて条件付けると，$G$と$g$は通常は一致しないが，正しいインデックス$\beta = \beta_0$のときだけ一致するということ．}
 \end{itemize}  
 \end{frame}
 
@@ -383,20 +384,26 @@
       \item \alert{The first step}: Use $w(X_i)=1$ to obtain a $\sqrt{n}$-consistent estimator of $\beta_0$.
         
       \item Let $\tilde{\beta}_0$ denote the estimator of $\beta_0$, 
-            and $\tilde{u}_i = Y_i - \hat{g}$ denote the residual obtained from $\tilde{\beta}_0$.
-      \item We can obtain a consistent nonparametric estimator of the conditional variance: $\hat{\sigma}^2({X_i^{T}\beta_0})$.
-      \item \alert{The second step}: Estimate $\beta_0$ again using $w(X_i)= \frac{1}{\hat{\sigma}^2({X_i^{T}\beta_0})}$:
+            and $\tilde{u}_i = Y_i - \hat{g}(X_i^T \tilde{\beta}_0)$ denote the residual obtained from $\tilde{\beta}_0$.
+      \item We can obtain a consistent nonparametric estimator of the conditional variance: $\hat{\sigma}^2({X_i^{T} \tilde{\beta}_0})$.
+      \end{itemize}
+  \end{frame}
+
+  \begin{frame}{A two-step procedure to Choose Optimal Weight}
+    \begin{itemize}
+      \item \alert{The second step}: Estimate $\beta_0$ again using $w(X_i)= \frac{1}{\hat{\sigma}^2({X_i^{T}\tilde{\beta}_0})}$:
             \begin{align*}
               \hat{\beta}_0 = 
               \arg \min_{\beta} 
               \sum_{i=1}^{n}  
                     \left[ Y_i - \hat{G}_{-i}(X_i^{T}\beta) \right]^2 
-                    \frac{1}{\hat{\sigma}^2({X_i^{T}\beta_0})} \mathbf{1}(X_i \in A_n).
+                    \frac{1}{\hat{\sigma}^2({X_i^{T}\tilde{\beta}_0})} \mathbf{1}(X_i \in A_n).
             \end{align*}
       \item The estimator $\hat{\beta}_0$ is semiparametrically efficient because
             $\hat{\sigma}^2(v) - \sigma^2(v)$ converges to zero at a particular rate 
             uniformly over $v \in D_v$ ($D_v$ is the support of $X_i^{T}\beta_0$).
-    \end{itemize}
+            \footnote{$\hat{\sigma}^2({X_i^{T}\beta})$を用いるケースもある．}
+    \end{itemize} 
   \end{frame}
   
   
@@ -405,23 +412,31 @@
       \item Recall that we assume in Assumption 8.4 that 
             $\frac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
             $ nh^8 \to 0$ as $n \to \infty$, 
-            where $m \geq 3$ is a a positive integer 
+            where $m \geq 3$ is a positive integer 
             whose specific value depends on the existence of the number of finite moments of $Y$ 
             along with the smoothness of the unknown function $g(\cdot)$.
+            \footnote{Assumption 8.4は，$g$をノンパラメトリックに推定することがパラメトリックパートの収束レートに影響を与えないための十分条件になっている．}
       \item The range of permissive smoothing parameters allows for optimal smoothing, i.e., 
             $h=O(n^{-\frac{1}{5}})$.
+            \footnote{このオーダーで選んだ$h$は，Assumption 8.4を満たしている．}
+    \end{itemize}
+  \end{frame}
+  
+  \begin{frame}{Bandwidth Selection for Ichimura's Method}
+    \begin{itemize}
       \item Our aim is to choose $\hat{\beta}$ close to $\beta_0$, 
-            and $h$ close to the value $h_0$ 
-            which minimizes the average of 
-            $ \E\{ \hat{g}(X_i^{T}\beta_0 \mid X_i^{T}\beta_0) - g(X_i^{T}\beta_0) \}^2 $.
+            and $h$ close to the value $h_0$, 
+            which minimize the average of 
+            \begin{align*}
+              \E\{ \hat{g}(X_i^{T}\beta_0 \mid X_i^{T}\beta_0) - g(X_i^{T}\beta_0) \}^2.
+            \end{align*}
       \item Hardle, Hall and Ichimura (1993) suggest 
             picking $\beta$ and the bandwidth $h$ jointly
             by minimization of $S_n(\beta)$.
       \item Further discussions follow in Section 8.4.
-    \end{itemize}
+    \end{itemize}    
   \end{frame}
-  
-  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
