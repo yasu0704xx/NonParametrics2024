@@ -218,7 +218,7 @@
   \item In general $G(X_i^{T}\beta) \neq g(X_i^{T} \beta)$.
   \item When $\beta = \beta_0$,
         it holds that $G(X_i^{T}\beta_0) = g(X_i^{T} \beta_0)$.
-        \footnote{一般の$\beta$を用いて条件付けると，$G$と$g$は通常は一致しないが，正しいインデックス$\beta = \beta_0$のときだけ一致するということ．}
+        \footnote{一般の$X_i^{T}\beta$を用いて条件付けると，$G$と$g$は通常は一致しないが，正しいインデックス$X_i^{T}\beta = X_i^{T}\beta_0$のときだけ一致するということ．}
 \end{itemize}  
 \end{frame}
 
@@ -378,7 +378,7 @@
     \end{itemize}
   \end{frame}
   
-  \begin{frame}{A two-step procedure to Choose Optimal Weight}
+  \begin{frame}{Two-Step Procedure to Choose Optimal Weight}
     \begin{itemize}
       \item Suppose that the conditional variance is a function of $X_i^{T}\beta_0$ (Let $\sigma^2({X_i^{T}\beta_0})$ denote it).
       \item \alert{The first step}: Use $w(X_i)=1$ to obtain a $\sqrt{n}$-consistent estimator of $\beta_0$.
@@ -389,7 +389,7 @@
       \end{itemize}
   \end{frame}
 
-  \begin{frame}{A two-step procedure to Choose Optimal Weight}
+  \begin{frame}{Two-Step Procedure to Choose Optimal Weight}
     \begin{itemize}
       \item \alert{The second step}: Estimate $\beta_0$ again using $w(X_i)= \frac{1}{\hat{\sigma}^2({X_i^{T}\tilde{\beta}_0})}$:
             \begin{align*}
@@ -407,7 +407,7 @@
   \end{frame}
   
   
-  \begin{frame}{Bandwidth Selection for Ichimura's Method}
+  \begin{frame}{Bandwidth Selection for Ichimura's Estimator}
     \begin{itemize}
       \item Recall that we assume in Assumption 8.4 that 
             $\frac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
@@ -422,7 +422,7 @@
     \end{itemize}
   \end{frame}
   
-  \begin{frame}{Bandwidth Selection for Ichimura's Method}
+  \begin{frame}{Bandwidth Selection for Ichimura's Estimator}
     \begin{itemize}
       \item Our aim is to choose $\hat{\beta}$ close to $\beta_0$, 
             and $h$ close to the value $h_0$, 
@@ -442,8 +442,183 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Direct Semiparametric Estimators for $\beta$}
   
+\begin{frame}{Direct Semiparametric Estimators for $\beta$}
+\begin{itemize}
+  \item Textbook: Sections 8.3; and 8.4.2.
+  \item Here we review:
+  \begin{itemize}
+    \item Hardle and Stoker's (1989) Average Derivative Estimator, 
+    \item Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator, and 
+    \item Li, Lu and Ullah's (2003) Estimator.
+  \end{itemize}
+  \item The advantage of the direct estimation method is that 
+        we can estimate $\beta_0$ and $g(x^T \beta_0)$ directly
+        without running the nonlinear least squares, 
+        which leads to the computational simplicity.
+  \item We still suffer from a finite-sample problem.
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Hardle and Stoker's (1989) Average Derivative Estimator}
+\begin{itemize}
+  \item Suppose that $x$ is a $q \times 1$ vector of continuous variables.
+  \item Then we obtain \alert{the average derivative} of $\E(Y \mid X=x)$:
+        \begin{align*}
+          \E \left[ 
+            \frac{\partial \E(Y \mid X=x)}{\partial x}
+          \right]
+          =
+          \E \left[
+            g^{(1)}(x^T \beta_0)
+          \right]
+          \beta_0
+        \end{align*}
+  \item Recall that the scale of $\beta_0$ is not identified, 
+        which means that the constant 
+        $\E \left[ g^{(1)}(x^T \beta_0)\right]$ 
+        does not matter.
+        That is, a normalized estimation of 
+        $\E \left[ \frac{\partial \E(Y \mid X=x)}{\partial x}\right]$
+        is an estimation of normalized $\beta_0$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Hardle and Stoker's (1989) Average Derivative Estimator}
+\begin{itemize}
+  \item Let $\hat{\E}(Y_i \mid X_i)$ denote the NW estimator of $\E(Y_i \mid X_i)$:
+        \begin{align*}
+          \hat{\E}(Y_i \mid X_i) 
+          = \frac
+            {\sum_{j=1}^{n} Y_j K\left( \frac{X_i - X_j}{a} \right)}
+            {\sum_{j=1}^{n} K\left( \frac{X_i - X_j}{a} \right)}.
+        \end{align*}
+  \item Assuming that the kernel function is differentiable, 
+        we can estimate $\beta_0$, estimating 
+        $\E \left[ 
+          \frac{\partial \E(Y \mid X=x)}{\partial x}
+        \right]$
+        with its sample analogue:
+        \begin{align*}
+          \tilde{\beta}_{ave} 
+          = \frac{1}{n} \sum_{i=1}^{n}
+            \frac{\partial \hat{\E}(Y_i \mid X_i)}{\partial X_i}.
+        \end{align*}
+  \item The scale normalization can also be implemented by 
+        $\dfrac{\tilde{\beta}_{ave}}{|\tilde{\beta}_{ave}|}$.
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Hardle and Stoker's (1989) Average Derivative Estimator}
+\begin{itemize}
+  \item An issue raised with this estimator is \alert{the random denominator problem},
+        which leads to a difficulty in the derivation of the asymptotic properties.
+  \item Rilstone (1991) establishes the $\sqrt{n}$-normality using a trimming function.
+\end{itemize}  
+\end{frame}
+
+
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
+\begin{itemize}
+  \item As we obtain the average derivative above, 
+        we also obtain \alert{the weighted average derivative} of $\E(Y \mid X=x)$:
+        \begin{align*}
+          \E \left[ w(x)
+            \frac {\partial \E(Y \mid X=x)}{\partial x}
+          \right]
+          =
+          \E \left[
+            w(x) g^{(1)}(x^T \beta_0)
+          \right]
+          \beta_0.
+        \end{align*}
+    
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
+  \begin{itemize}
+    \item Let $w(x)$ be the density function $f(x)$, 
+          and $\delta$ denote \alert{the density-weighted average derivative} of $\E(Y \mid X=x)$.
+    \item Then we obtain    
+          \begin{align*}
+          \delta &= \E \left[ f(X)
+                          \frac {\partial \E(Y \mid X=x)}{\partial x}
+                        \right] \\
+                 &= \E \left[ f(X)
+                          g^{(1)}(X^T \beta_0)
+                        \right] \\
+                 &= \int  g^{(1)}(x^T \beta_0) f^2(x) dx\\
+                 &= g(x^T \beta_0)f^2(x)
+                    - 2 \int g(x^T \beta_0) f^{(1)}(x) f(x) dx.
+            \end{align*}   
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Powell, Stock and Stoker (1989) Density-Weighted Average Derivative Estimator}
+\begin{itemize}
+  \item Assume that $f(x)=0$ at the boundary of the support of $X$.
+        Then we observe that $g(x^T \beta_0)f^2(x)= 0$, that is,
+        \begin{align*}
+        \delta &= - 2 \int g(x^T \beta_0) f^{(1)}(x) f(x) dx \\
+               &= -2 \E [g(X^{T}\beta_0)f^{(1)}(X)] \\
+               &= -2 \E [Y f^{(1)}(X)].
+        \end{align*}    
+  \item We can estimate $\delta$ by its sample analogue:
+        \begin{align*}
+          \hat{\delta} = - \frac{2}{n} \sum_{i=1}^{n} Y_i \hat{f}_{-i}^{(1)}(X_i),
+        \end{align*}
+        where $\hat{f}_{-i}(X_i)$ is the leave-one-out NW estimator of $f(X)$:
+        \begin{align*}
+          \hat{f}_{-i}(X_i) = \frac{1}{n-1} \sum_{j \neq i} \left(\frac{1}{h}\right)^q K \left( \frac{X_i - X_j}{h} \right).
+        \end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
+\begin{itemize}
+  \item The textbook uses the NW estimator $\hat{f}^{(1)}(X_i)$ in (8.17). 
+  \item However, Powell, Stock and Stoker (1989) define their estimator 
+        using the leave-one-out NW estimator $\hat{f}_{-i}^{(1)}(X_i)$.
+  \item Here we proceed with Powell, Stock and Stoker (1989).
+\end{itemize}
+\end{frame}
   
   
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
+\begin{itemize}
+  \item A useful representation of $\hat{\delta}$ is given by 
+        \begin{align*}
+          \hat{\delta} 
+            = \frac{-2}{n(n-1)}
+              \sum_{i=1}^{n} \sum_{j \neq i}
+              \left( \frac{1}{h} \right)^{q+1}
+              Y_i K^{(1)} \left( \frac{X_i - X_j}{h} \right).
+        \end{align*}
+  \item Under some assumptions, 
+        if $h \to 0$ and $nh^{q+2} \to \infty$ hold,
+        then the density-weighted average derivative estimator $\hat{\delta}$ satisfies that 
+        \begin{align*}
+          \sqrt{n} (\hat{\delta} - \E[\hat{\delta}]) \darrow \text{Normal}(0, \Sigma_{\delta}),
+        \end{align*}
+        where $\Sigma_{\delta} = 4\E[\sigma^2(X) f^{(1)}(X) f^{(1)}(X)^T] + 4 \Var( f(X) g^{(1)}(X))$. 
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{$U$-Statistics Form of $\hat{\delta}$}
+ \begin{itemize}
+  \item Recall that
+ \end{itemize} 
+\end{frame}
+
+
+
+
+
+
+
+
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
