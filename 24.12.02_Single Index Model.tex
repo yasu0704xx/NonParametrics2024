@@ -448,8 +448,9 @@
   \item Here we review:
   \begin{itemize}
     \item Hardle and Stoker's (1989) Average Derivative Estimator, 
-    \item Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator, and 
-    \item Li, Lu and Ullah's (2003) Estimator.
+    \item Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator,
+    \item Li, Lu and Ullah's (2003) Estimator, and
+    \item Hristache, Juditsky and Spokoiny's (2001) Improved Average Derivative Estimator.
   \end{itemize}
   \item The advantage of the direct estimation method is that 
         we can estimate $\beta_0$ and $g(x^T \beta_0)$ directly
@@ -556,7 +557,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Powell, Stock and Stoker (1989) Density-Weighted Average Derivative Estimator}
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
 \begin{itemize}
   \item Assume that $f(x)=0$ at the boundary of the support of $X$.
         Then we observe that $g(x^T \beta_0)f^2(x)= 0$, that is,
@@ -578,9 +579,11 @@
 
 \begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
 \begin{itemize}
+  \item There is \alert{no denominator messing with uniform convergence}. 
+        There is only a density estimator, no conditional mean needed.
   \item The textbook uses the NW estimator $\hat{f}^{(1)}(X_i)$ in (8.17). 
-  \item However, Powell, Stock and Stoker (1989) define their estimator 
-        using the leave-one-out NW estimator $\hat{f}_{-i}^{(1)}(X_i)$.
+  \item However, \alert{Powell, Stock and Stoker (1989) define their estimator 
+        using the leave-one-out NW estimator $\hat{f}_{-i}^{(1)}(X_i)$}.
   \item Here we proceed with Powell, Stock and Stoker (1989).
 \end{itemize}
 \end{frame}
@@ -608,18 +611,204 @@
 
 \begin{frame}{$U$-Statistics Form of $\hat{\delta}$}
  \begin{itemize}
-  \item Recall that
+  \item Recall that $K(\cdot)$ is differentiable and symmetric, that is,
+        $K^{(1)}(u) = -K^{(1)}(-u)$. Then, we obtain the standard $U$-statistics form of $\hat{\delta}$:
+        \begin{align*}
+          \hat{\delta} 
+          =
+          - \begin{pmatrix}  
+            n \\ 2
+          \end{pmatrix}^{-1}
+          \sum_{i=1}^{n-1} \sum_{j=i+1}^{n}
+          \left( \frac{1}{h} \right)^{q+1}
+          K^{(1)} \left( \frac{X_i - X_j}{h} \right)
+          (Y_i - Y_j).
+        \end{align*}
+  \item Letting $Z_i$ denote $(Y_i, X_i^T)^T$ 
+        and $p_n(Z_i, Z_j)$ denote $-\frac{1}{h^{q+1}}K^{(1)} \left( \frac{X_i - X_j}{h} \right)(Y_i - Y_j)$,
+        $\hat{\delta}$ can be rewritten as
+        \begin{align*}
+          \hat{\delta}
+          =
+          \begin{pmatrix}  
+            n \\ 2
+          \end{pmatrix}^{-1}
+          \sum_{i=1}^{n-1} \sum_{j=i+1}^{n}
+          p_n(Z_i, Z_j).
+        \end{align*}
+  \item This representation of $\hat{\delta}$ permits a direct analysis of its asymptotic properties, 
+        based on the asymptotic theory of $U$-statistics.
+        Further discussions can be seen in Serfling (1980); van der Vaart (2000, Chapter 12).
  \end{itemize} 
 \end{frame}
 
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
+\begin{itemize}
+  \item The asymptotic bias is a bit complicated.
+  \item Let $q$ be the dimension of $X$, and set 
+        \begin{align*}
+          p = \left\{
+            \begin{array}{l}
+              \dfrac{q+4}{2} \quad \text{ if } q \text{ is even}, 
+              \\ \\
+              \dfrac{q+3}{2} \quad \text{ if } q \text{ is odd}.
+            \end{array}
+            \right.
+        \end{align*}
+  \item The kernel function $K(\cdot)$ for the estimation of $f(\cdot)$ is required to be of order at least $p$.
+  \item The asymptotic bias is 
+        $\sqrt{n}(\E(\hat{\delta}) - \delta) = O(n^{\frac{1}{2}}h^p)$,
+        which is $o(1)$ if $nh^{2p} \to 0$.
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Powell, Stock and Stoker's (1989) Density-Weighted Average Derivative Estimator}
+\begin{itemize}
+  \item $nh^{2p} \to 0$ is violated if $h$ is selected to be optimal for the estimation of $f(\cdot)$ or $f^{(1)}(\cdot)$.
+        That is, this requirement needs \alert{the bandwidth $h$ to undersmooth to reduce the bias}.
+        Further discussions on the bandwidth selection follow in Section 8.4.
+  \item Nishiyama and Robinson (2005): Powell, Stock and Stoker's (1989) density-weighted average derivative estimator can be refined by bootstrapping methods.
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Nishiyama and Robinson (2005)}
+  \begin{figure}
+    \begin{center}
+    \includegraphics[width=1.0\textwidth]{material/Nishiyama_Robinson_2005_abst.png}
+    \end{center}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Li, Lu and Ullah's (2003) Estimator}
+\begin{itemize}
+  \item We consider the estimation of the average derivative $\E[g^{(1)}(X^T\beta_0)]$ again.
+  \item We can also use the local polynomial method for the estimation of $g^{(1)}(X^T\beta_0)$.
+  \item Let $\hat{g}^{(1)}(X_i^T\beta_0)$ denote the kernel estimator of $g^{(1)}(X_i\beta_0)$,
+        which is obtained from an $m$-th order local polynomial regression.
+  \item Li, Lu and Ullah (2003) suggest using $\tilde{\beta}_{ave} = \dfrac{1}{n}\hat{g}^{(1)}(X_i^T\beta_0)$ 
+        to estimate $\beta = \E[{g}^{(1)}(X^T\beta_0)]$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Li, Lu and Ullah's (2003) Estimator}
+\begin{itemize}
+  \item Their approach does not need the condition $f(x)=0$ at the boundary of the support of $X$. 
+        However, they need to assume that 
+        \begin{itemize}
+          \item the support of $X$ is a compact set, and that 
+          \item the density $f(x)$ is bounded below by a positive constant at the support of $X$,
+        \end{itemize}
+        which lead to avoiding the use of a trimming function. 
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Li, Lu and Ullah's (2003) Estimator}
+\begin{itemize}
+  \item Under the assumptions above and some additional conditions, 
+        if we use a second order kernel, 
+        where $n\displaystyle\sum_{s=1}^{q} a_s^{2m} \to 0$ 
+        and $\dfrac{n a_1 \cdots a_q \sum_{s=1}^{q}}{\ln (n)} \to \infty$ 
+        with $m$ denoting the order of local polynomial estimation, then,
+        \begin{align*}
+          \sqrt{n} (\tilde{\beta}_{ave} - \beta) 
+          \darrow \text{Normal}\left(0, \Phi + \var(g^{(1)}(X^{T}\beta_0)) \right),
+        \end{align*} 
+        where $\Phi = \E \left[ \dfrac{\sigma^2(X) f^{(1)}(X) f^{(1)}(X)^T}{f^{(2)}(X)} \right]$.
+  \item The proof of the asymptotic normality can be derived from $U$-statistics theory.
+  \item Newey (1994) shows that the asymptotic variance does not depend on the specific nonparametric estimation method.
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Hristache, Juditsky and Spokoiny's (2001) Improved Average Derivative Estimator}
+\begin{itemize}
+  \item Powell, Stock and Stoker's (1989) density-weighted average derivative estimator requires 
+        the density of $X$ to be increasingly smooth as the dimension of $X$ increases.
+  \item This is necessary to make $\sqrt{n}(\hat{\delta} - \delta)$ asymptotically normal with a mean of 0.
+  \item \alert{Practical Consequence}: The finite-sample performance of the density-weighted average derivative estimator
+        is likely to deteriorate as the dimension of $X$ increases, 
+        especially if the density of $X$ is not very smooth.
+  \item Specifically, the estimator's bias and MSE are likely to increase as the the dimension of $X$ increases.
+\end{itemize}
+\end{frame}
 
 
+\begin{frame}{Hristache, Juditsky and Spokoiny's (2001) Improved Average Derivative Estimator}
+\begin{itemize}
+  \item Hristache, Juditsky and Spokoiny (2001) suggest an iterated average derivative estimator that overcomes this problem.
+  \item Their estimator is based on the observation that $g(x^T\beta_0)$ does not vary 
+        when $x$ varies in a direction that is orthogonal to $\beta_0$.
+  \item Therefore, only the directional derivative of $\E(Y \mid X = x)$ along the direction of $\beta$ is needed for estimation.
+  \item Suppose that this direction were known. 
+        Then estimating the directional derivative would be a one-dimensional nonparametric estimation problem,
+        and there would be no curse of dimensionality.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Hristache, Juditsky and Spokoiny's (2001) Improved Average Derivative Estimator}
+\begin{itemize}
+  \item In practice, the direction of $\beta$ is unknown.
+  \item Hristache, Juditsky and Spokoiny (2001) show that it can be estimated with sufficient accracy 
+        through \alert{an iterative procedure}.
+  \item Their idea is to use prior information about the vector $\beta$
+        for improving the quality of the gradient estimate 
+        by extending a weighting kernel in the direction of small directional derivatives,
+        and they demonstrate that the whole procedure requires at most $2 \log (n)$ iterations.
+  \item Under relatively mild assumptions, their estimator is $\sqrt{n}$-consistent.
+  \item See Horowitz (2009, Section 2.6) for further discussions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Estimation of $g(\cdot)$}
+\begin{itemize}
+  \item Let $\beta_n$ denote a $\sqrt{n}$-consistent estimator of $\beta$, or $\delta$.
+  \item Once we obtain $\beta_n$, we can estimate $g(x^T\beta_0)$ by 
+        \begin{align*}
+          \hat{g}(x^T\beta_n) = 
+          \frac
+          {\sum_{j=1}^{n} Y_j K \left( \frac{(X_j - x)^T \beta_n}{h} \right)}
+          {\sum_{j=1}^{n} K \left( \frac{(X_j - x)^T \beta_n}{h} \right)}.
+        \end{align*}
+  \item Recall that $\beta_n$ is a $\sqrt{n}$-consistent estimator of $\beta$, that is,
+        $\beta_n - \beta_0 = Op(n^{-\frac{1}{2}})$, 
+  \item This converges to zero faster than standard nonparametric estimators.
+  \item Then, the asymptotic distribution of $\hat{g}(x^T\beta_0)$ is the same as that of $\hat{g}(x^T\beta_n)$.
+  \item Thus, we obtain \textbf{Corollary 8.1}:
+        \begin{align*}
+          \sqrt{nh} [\hat{g}(x^T\beta_n) - g(x^T\beta_0) - h^2 B(x^\beta_0)] 
+          \darrow 
+          \text{Normal}\left( 0, \frac{\kappa \sigma^2(x^T\beta_0)}{f(x^T\beta_0)} \right).
+        \end{align*}
+\end{itemize}
+\end{frame}
 
 
+\begin{frame}{Generalized Cases?}
+\begin{itemize}
+  \item The direct average derivative estimation method discussed above
+        is applicable only when $x$ is a $q \times 1$ vector of continuous variables
+        because the derivative w.r.t. discrete variables is not defined.
+  \item Horowitz and Hardle (1996) discuss how direct (noniterative) estimation can be generalized to cases
+        for which some components of $x$ are discrete.
+        Horowitz (2009) provides an excellent overview of this method. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Finite-Sample Problem}
+\begin{itemize}
+  \item Nonparametric estimation in the 1st stage may suffer from the curse of dimensionality.
+  \item In small-sample settings, the iterative method of Ichimura (1993) may be more appealing 
+        as it avoids having to conduct high-dimensional nonparametric estimation.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Carroll, Fan, Gijbels and Wand (1997)}
+\begin{itemize}
+  \item They consider the problem of estimating a general partially linear single index model 
+        which contains both a partially linear model and a single index model as special cases.
+\end{itemize}
+\end{frame}
 
 
-
-  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
