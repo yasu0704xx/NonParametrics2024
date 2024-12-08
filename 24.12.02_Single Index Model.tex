@@ -22,12 +22,13 @@
 \def\Cov{\text{Cov}}
 \def\E{\mathbb{E}}
 \def\R{\mathbb{R}}
+\def\P{\mathbb{P}}
 \def\parrow{\xrightarrow{p}}
 \def\darrow{\xrightarrow{d}}
 \def\plim{\text{plim }}
 \usepackage{bbm}
 \usepackage{ascmac}
-
+\usepackage{tcolorbox}
 
 %%%%%%ナビゲーションバー%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\useoutertheme{miniframes}
@@ -405,37 +406,7 @@
             \footnote{$\hat{\sigma}^2({X_i^{T}\beta})$を用いるケースもある．}
     \end{itemize} 
   \end{frame}
-  
-  
-  \begin{frame}{Bandwidth Selection for Ichimura's Estimator}
-    \begin{itemize}
-      \item Recall that we assume in Assumption 8.4 that 
-            $\frac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
-            $ nh^8 \to 0$ as $n \to \infty$, 
-            where $m \geq 3$ is a positive integer 
-            whose specific value depends on the existence of the number of finite moments of $Y$ 
-            along with the smoothness of the unknown function $g(\cdot)$.
-            \footnote{Assumption 8.4は，$g$をノンパラメトリックに推定することがパラメトリックパートの収束レートに影響を与えないための十分条件になっている．}
-      \item The range of permissive smoothing parameters allows for optimal smoothing, i.e., 
-            $h=O(n^{-\frac{1}{5}})$.
-            \footnote{このオーダーで選んだ$h$は，Assumption 8.4を満たしている．}
-    \end{itemize}
-  \end{frame}
-  
-  \begin{frame}{Bandwidth Selection for Ichimura's Estimator}
-    \begin{itemize}
-      \item Our aim is to choose $\hat{\beta}$ close to $\beta_0$, 
-            and $h$ close to the value $h_0$, 
-            which minimize the average of 
-            \begin{align*}
-              \E\{ \hat{g}(X_i^{T}\beta_0 \mid X_i^{T}\beta_0) - g(X_i^{T}\beta_0) \}^2.
-            \end{align*}
-      \item Hardle, Hall and Ichimura (1993) suggest 
-            picking $\beta$ and the bandwidth $h$ jointly
-            by minimization of $S_n(\beta)$.
-      \item Further discussions follow in Section 8.4.
-    \end{itemize}    
-  \end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -685,26 +656,26 @@
   \item We can also use the local polynomial method for the estimation of $g^{(1)}(X^T\beta_0)$.
   \item Let $\hat{g}^{(1)}(X_i^T\beta_0)$ denote the kernel estimator of $g^{(1)}(X_i\beta_0)$,
         which is obtained from an $m$-th order local polynomial regression.
-  \item Li, Lu and Ullah (2003) suggest using $\tilde{\beta}_{ave} = \dfrac{1}{n}\hat{g}^{(1)}(X_i^T\beta_0)$ 
+  \item Li, Lu and Ullah (2003) suggest to use $\tilde{\beta}_{ave} = \dfrac{1}{n}\hat{g}^{(1)}(X_i^T\beta_0)$ 
         to estimate $\beta = \E[{g}^{(1)}(X^T\beta_0)]$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Li, Lu and Ullah's (2003) Estimator}
 \begin{itemize}
-  \item Their approach does not need the condition $f(x)=0$ at the boundary of the support of $X$. 
-        However, they need to assume that 
+  \item Their approach does not require the condition $f(x)=0$ at the boundary of the support of $X$. 
+        However, they require to assume that 
         \begin{itemize}
           \item the support of $X$ is a compact set, and that 
           \item the density $f(x)$ is bounded below by a positive constant at the support of $X$,
         \end{itemize}
-        which lead to avoiding the use of a trimming function. 
+        which leads to avoiding the use of a trimming function. 
 \end{itemize}  
 \end{frame}
 
 \begin{frame}{Li, Lu and Ullah's (2003) Estimator}
 \begin{itemize}
-  \item Under the assumptions above and some additional conditions, 
+  \item Under the assumptions so far and some additional conditions, 
         if we use a second order kernel, 
         where $n\displaystyle\sum_{s=1}^{q} a_s^{2m} \to 0$ 
         and $\dfrac{n a_1 \cdots a_q \sum_{s=1}^{q}}{\ln (n)} \to \infty$ 
@@ -725,7 +696,7 @@
         the density of $X$ to be increasingly smooth as the dimension of $X$ increases.
   \item This is necessary to make $\sqrt{n}(\hat{\delta} - \delta)$ asymptotically normal with a mean of 0.
   \item \alert{Practical Consequence}: The finite-sample performance of the density-weighted average derivative estimator
-        is likely to deteriorate as the dimension of $X$ increases, 
+        is likely to be deteriorated as the dimension of $X$ increases, 
         especially if the density of $X$ is not very smooth.
   \item Specifically, the estimator's bias and MSE are likely to increase as the the dimension of $X$ increases.
 \end{itemize}
@@ -734,7 +705,7 @@
 
 \begin{frame}{Hristache, Juditsky and Spokoiny's (2001) Improved Average Derivative Estimator}
 \begin{itemize}
-  \item Hristache, Juditsky and Spokoiny (2001) suggest an iterated average derivative estimator that overcomes this problem.
+  \item Hristache, Juditsky and Spokoiny (2001) introduce an iterated average derivative estimator that overcomes this problem.
   \item Their estimator is based on the observation that $g(x^T\beta_0)$ does not vary 
         when $x$ varies in a direction that is orthogonal to $\beta_0$.
   \item Therefore, only the directional derivative of $\E(Y \mid X = x)$ along the direction of $\beta$ is needed for estimation.
@@ -747,7 +718,7 @@
 \begin{frame}{Hristache, Juditsky and Spokoiny's (2001) Improved Average Derivative Estimator}
 \begin{itemize}
   \item In practice, the direction of $\beta$ is unknown.
-  \item Hristache, Juditsky and Spokoiny (2001) show that it can be estimated with sufficient accracy 
+  \item Hristache, Juditsky and Spokoiny (2001) show that this can be estimated with sufficient accuracy 
         through \alert{an iterative procedure}.
   \item Their idea is to use prior information about the vector $\beta$
         for improving the quality of the gradient estimate 
@@ -784,7 +755,7 @@
 
 \begin{frame}{Generalized Cases?}
 \begin{itemize}
-  \item The direct average derivative estimation method discussed above
+  \item The direct average derivative estimation method discussed previously
         is applicable only when $x$ is a $q \times 1$ vector of continuous variables
         because the derivative w.r.t. discrete variables is not defined.
   \item Horowitz and Hardle (1996) discuss how direct (noniterative) estimation can be generalized to cases
@@ -814,24 +785,188 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bandwidth Selection}
   
+\begin{frame}{Bandwidth Selection for Ichimura's Estimator}
+  \begin{itemize}
+    \item Recall that we assume in Assumption 8.4 that 
+          $\dfrac{q \ln(h)}{nh^{3 + \frac{3}{m-1}}} \to 0$ and 
+          $ nh^8 \to 0$ as $n \to \infty$, 
+          where $m \geq 3$ is a positive integer 
+          whose specific value depends on the existence of the number of finite moments of $Y$ 
+          along with the smoothness of the unknown function $g(\cdot)$.
+          \footnote{Assumption 8.4は，$g$をノンパラメトリックに推定することがパラメトリックパートの収束レートに影響を与えないための十分条件になっている．}
+    \item The range of permissive smoothing parameters allows for optimal smoothing, i.e., 
+          $h=O(n^{-\frac{1}{5}})$.
+          \footnote{このオーダーで選んだ$h$は，Assumption 8.4を満たしている．}
+  \end{itemize}
+\end{frame}
 
+\begin{frame}{Bandwidth Selection for Ichimura's Estimator}
+  \begin{itemize}
+    \item Our aim is to choose $\hat{\beta}$ close to $\beta_0$, 
+          and $h$ close to the value $h_0$, 
+          which minimize the average of 
+          \begin{align*}
+            \E\{ \hat{g}(X_i^{T}\beta_0 \mid X_i^{T}\beta_0) - g(X_i^{T}\beta_0) \}^2.
+          \end{align*}
+    \item Hardle, Hall and Ichimura (1993) suggest 
+          picking $\beta$ and the bandwidth $h$ jointly
+          by minimization of $S_n(\beta)$.
+  \end{itemize}    
+\end{frame}
   
+\begin{frame}{Bandwidth Selection for Ichimura's Estimator}
+\begin{itemize}
+  \item Recall the proof of \textbf{Theorem 8.1}. 
+        We have established the following decomposition of the least squares criterion:
+        \begin{align*}
+          S_n(\beta, h) 
+                     &= \frac{1}{n} \sum_{i=1}^{n}(Y_i \hat{G}_{-i}(X_i^T\beta))^2 \\
+                     &= \frac{1}{n} \sum_{i=1}^{n}(Y_i-G(X_i^T\beta))^2 \\
+                     &+ \frac{1}{n} \sum_{i=1}^{n}({G}_{-i}(X_i^T\beta_0)-g(X_i\beta_0))^2 + op(1) \\
+                     &\equiv S(\beta) + T(h) + op(1).
+        \end{align*}
+  \item Minimizing $S_n(\beta, h)$ simultaneously over both 
+        $(\beta, h) \in \mathcal{B}_n \times \mathcal{H}_n$ is equivalent to 
+        \begin{itemize}
+          \item first minimizing $S(\beta)$ over $\beta \in \mathcal{B}_n$; and
+          \item second minimizing $T(h)$ over $h \in \mathcal{H}_n$. 
+        \end{itemize}
+\end{itemize}
+\end{frame}
   
-  
-  
-  
-  
+\begin{frame}{Bandwidth Selection for Ichimura's Estimator}
+\begin{itemize}
+  \item Let $(\hat{\beta},\hat{h})$ be the minimizers of $S_n(\beta, h)$.
+  \item Suppose that we use the second order kernel. 
+        Hardle, Hall and Ichimura (1993) show that the MSE optimal bandwidth satisfies $\hat{h} = O(n^{-\frac{1}{5}})$, and $\dfrac{\hat{h}}{h_0} \parrow 1$.
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Bandwidth Selection for Ichimura's Estimator}
+  \begin{itemize}
+    \item Compare the regularity conditions used in Ichimura (1993) with those in Hardle, Hall and Ichimura (1993).
+  \end{itemize}
+  \begin{minipage}{0.49\textwidth}  % [t]を指定して上揃え
+    \begin{tcolorbox}[colframe=red!50!white, colback=red!10!white, title=Ichimura (1993)]
+        \begin{itemize}
+          \item A second order kernel is used.
+          \item $h$ satisfies assumption 8.4.
+          \item $\E[|Y^m|]<\infty$ for $^\exists m \geq 3$.
+        \end{itemize}
+    \end{tcolorbox}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}{0.49\textwidth}  % [t]を指定して上揃え
+    \begin{tcolorbox}[colframe=red!50!white, colback=red!10!white, title=HHI (1993)]
+        \begin{itemize}
+            \item A higher order kernel is needed.
+            \item $h = O(n^{-\frac{1}{5}})$.
+            \item $Y$ has moments of any order.
+        \end{itemize}
+    \end{tcolorbox}
+  \end{minipage} 
+\end{frame}
+
+\begin{frame}{Bandwidth Selection for Average Derivative Estimator}
+\begin{itemize}
+  \item The estimation of $\beta_0$ involves 
+        the $q$-dimensional multivariate nonparametric estimation of the first order derivatives.
+  \item \alert{Smoothing Parameters for $\hat{f}_{-i}^{(1)}(X_i)$}: 
+        Hardle and Tsybakov (1993) suggest 
+        to choose the smoothing parameters $h_1, \cdots, h_q$ 
+        to minimize MSE of $\hat{\delta}$.
+  \item They show that the asymptotically optimal bandwidth is given by 
+        $h_s = c_s n^{-\frac{2}{2q+v+2}}, \text{ for all } s = 1, \dots, q$, 
+        where $c_s$ is the constant, and $v$ is the order of kernel.
+  \item Powell and Stoker (1996) provide a method for estimating $c_s$.
+  \item Horowitz (2009) suggests to select $h_s$ based on bootstrap resampling.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bandwidth Selection for Average Derivative Estimator}
+\begin{itemize}
+  \item \alert{Smoothing Parameters for $\hat{g}({X_i}^T\beta_n)$}: 
+        Once we select the optimal $h_s$'s, we can obtain an estimator of $\beta$.
+        Let $\beta_n$ denote a generic estimator.
+  \item We estimate $\E[y|x] = g(x^T\beta_0)$ by $\hat{g}(x^T\beta_n, h) = \hat{g}(x^T\beta_n)$.
+        The smoothing parameter associated with the scalar index $x^T \beta_n$ can be selected by least squares cross-validation:
+        \begin{align*}
+          \hat{h} = \arg\min_{h} \sum_{i=1}^{n} [Y_i - \hat{g}_{-i}(X_i^T\beta_n, h)]^2.
+        \end{align*}
+  \item Under some regularity conditions, the selection of $h$ is of order $O(n^{-\frac{1}{5}})$.
+\end{itemize}
+\end{frame}
+
+ 
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 \section{Klein and Spady's (1993) Estimator}
   
+\begin{frame}{Semiparametric Binary Choice Model}
+ \begin{itemize}
+  \item Consider the following binary choice model:
+        \begin{align*}
+          Y_i = \left\{
+            \begin{array}{l}
+              1 \text{ if } Y_i^{\star} = \alpha + X_i^T \beta + \epsilon > 0, 
+              \\ 
+              0 \text{ if } Y_i^{\star} = \alpha + X_i^T \beta + \epsilon \leq 0.
+            \end{array}
+            \right.
+        \end{align*}
+  \item This model can be rewritten as
+        \begin{align*}
+          \E(Y_i \mid X_i) 
+          &= \P(Y_i = 1 \mid X_i)\\
+          &= \P( \alpha + X_i^T \beta + \epsilon > 0)\\
+          &= \P(\epsilon > -X_i^T \beta - \alpha)
+          \equiv g(X_i^T\beta),
+        \end{align*}
+        which means that the binary choice model is a special case of the single index models.
+ \end{itemize} 
+\end{frame} 
   
   
-  
-  
-  
+\begin{frame}{Semiparametric Binary Choice Model}
+\begin{itemize}
+  \item Suppose that $g(\cdot)$ were known. 
+        We would estimate $\beta$ by maximum likelihood methods.
+        The likelihood function would be 
+        \begin{align*}
+          L^{\star}(b) &= \P(\epsilon > -X_i^Tb - \alpha)^{\sum_{i=1}^n Y_i}\\
+                       &\times 
+                        \P(\epsilon \leq -X_i^Tb  -\alpha)^{\sum_{i=1}^n (1-Y_i)} \\
+                       &= g(X_i^Tb)^{\sum_{i=1}^n Y_i} \times \{1-g(X_i^Tb)\}^{\sum_{i=1}^n (1-Y_i)},
+        \end{align*}
+        and then the log-likelihood function would be
+        \begin{align*}
+          L(b) = \sum_{i=1}^{n}[Y_i \log g(X_i^Tb) + (1 - Y_i) \log (1 - g(X_i^Tb))].
+        \end{align*}
+\end{itemize}
+\end{frame}  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
