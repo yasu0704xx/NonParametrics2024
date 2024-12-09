@@ -638,7 +638,9 @@
   \item $nh^{2p} \to 0$ is violated if $h$ is selected to be optimal for the estimation of $f(\cdot)$ or $f^{(1)}(\cdot)$.
         That is, this requirement needs \alert{the bandwidth $h$ to undersmooth to reduce the bias}.
         Further discussions on the bandwidth selection follow in Section 8.4.
-  \item Nishiyama and Robinson (2005): Powell, Stock and Stoker's (1989) density-weighted average derivative estimator can be refined by bootstrapping methods.
+  \item Cattaneo, Crump and Jansson (2010, 2011) 
+        introduce another asymptotic theory to relax strong assumptions .
+  \item Nishiyama and Robinson (2005): Density-weighted average derivative estimators can be refined by bootstrapping methods.
 \end{itemize}  
 \end{frame}
 
@@ -865,6 +867,7 @@
         \end{itemize}
     \end{tcolorbox}
   \end{minipage} 
+  
 \end{frame}
 
 \begin{frame}{Bandwidth Selection for Average Derivative Estimator}
@@ -906,13 +909,15 @@
   
 \begin{frame}{Semiparametric Binary Choice Model}
  \begin{itemize}
-  \item Consider the following binary choice model:
+  \item Consider the following binary choice model
+        \footnote{(8.2)式を参照せよと書いてあるが，$\beta$の識別のためには定数項の係数$\alpha$を抜いた方がよいのでは？}
+        :
         \begin{align*}
           Y_i = \left\{
             \begin{array}{l}
-              1 \text{ if } Y_i^{\star} = \alpha + X_i^T \beta + \epsilon > 0, 
+              1 \text{ if } Y_i^{\star} = \alpha + X_i^T \beta + \epsilon_i > 0, 
               \\ 
-              0 \text{ if } Y_i^{\star} = \alpha + X_i^T \beta + \epsilon \leq 0.
+              0 \text{ if } Y_i^{\star} = \alpha + X_i^T \beta + \epsilon_i \leq 0.
             \end{array}
             \right.
         \end{align*}
@@ -920,8 +925,8 @@
         \begin{align*}
           \E(Y_i \mid X_i) 
           &= \P(Y_i = 1 \mid X_i)\\
-          &= \P( \alpha + X_i^T \beta + \epsilon > 0)\\
-          &= \P(\epsilon > -X_i^T \beta - \alpha)
+          &= \P( \alpha + X_i^T \beta + \epsilon_i > 0)\\
+          &= \P(\epsilon_i > -X_i^T \beta - \alpha)
           \equiv g(X_i^T\beta),
         \end{align*}
         which means that the binary choice model is a special case of the single index models.
@@ -947,27 +952,47 @@
 \end{itemize}
 \end{frame}  
  
+\begin{frame}{Klein and Spady's (1993) Binary Choice Estimator}
+ \begin{itemize}
+  \item In reality, $g(\cdot)$ is unknown.
+  \item Klein and Spady (1993) suggest to replace $g(\cdot)$ with the leave-one-out NW estimator
+        $\hat{g}_{-i}(X_i^T \beta) = \frac{\sum_{j \neq i} K \left( \frac{(X_i - X_j)^T \beta}{h}\right)Y_j}{\sum_{j \neq i} K \left( \frac{(X_i - X_j)^T \beta}{h}\right)}.$
+  \item Making this substitution, and adding a trimming function, this leads to the feasible likelihood criterion:
+        \begin{align*}
+          L(\beta) = \sum_{i=1}^{n}[Y_i \log \hat{g}_{-i}(X_i^T \beta) + (1 - Y_i) \log (1 - \hat{g}_{-i}(X_i^T \beta))]1_{i}(b),
+        \end{align*}
+        where the trimming indicator should not be a function of $\beta$, but instead of a preliminary estimator:
+        \begin{align*}
+          1_i(b) = 1\left( \hat{f}_{X^T\tilde{\beta}}(X_i^T\tilde{\beta}) \geq b \right),
+        \end{align*}
+        with a preliminary estimator $\tilde{\beta}$ and density estimator $\hat{f}_{X^T\tilde{\beta}}(\cdot)$.
+ \end{itemize} 
+\end{frame}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
+\begin{frame}{Asymptotic Properties of Klein and Spady's Estimator}
+\begin{itemize}
+  \item The following asymptotic properties hold 
+        \begin{itemize}
+          \item under some regularity conditions, and
+          \item assuming that the kernel $k$ is of higher-order (must be of fourth-order).
+        \end{itemize}
+  \item Define $G(X_i^T \beta) = \E[g(X_i^T\beta_0)\mid X_i^T\beta]$. 
+        Then we obtain the asymptotic distribution:
+        \begin{align*}
+          \sqrt{n}(\hat{\beta} - \beta) \darrow \text{Normal}(0, \Omega),
+        \end{align*}
+        where the asymptotic variance is given by 
+        \begin{align*}
+          \Omega = \E \left[ 
+            \frac{\partial}{\partial\beta}G(X_i^T\beta)
+            \frac{\partial}{\partial\beta}G(X_i^T\beta)^T
+            \frac{1}{g(X_i^T\beta_0)(1-g(X_i^T\beta_0))}
+          \right]^{-1}.
+        \end{align*}
+  \item Klein and Spady's (1993) estimator achieves \alert{the semiparametric efficiency bound for the single-index binary choice model} (not for the general single-index model).
+\end{itemize}
+\end{frame}
+ 
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -979,7 +1004,21 @@
   
   
   
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1052,33 +1091,102 @@
   
 \section{References}
   
-  
-\begin{frame}{References (1)}
+
+
+\begin{frame}{References}
+\begin{itemize}
+  \item Carroll, R. J., J. Fan, I. Gijbels, and M. P. Wand (1997)
+        ``Generalized Partially Linear Single-Index Models,'' 
+        \textit{Journal of the American Statistical Association,} 92(438), 477-489.
+  \item Cattaneo, M. D., R. K. Rcump, and M. Jansson (2010)
+        ``Robust Data-Driven Inference for Density-Weighted Average Derivatives,''
+        \textit{Journal of the American Statistical Association,} 105, 1070-1083.
+  \item Cattaneo, M. D., R. K. Rcump, and M. Jansson (2011)
+        ``Small Bandwidth Asymptotics for Density-Weighted Average Derivatives,''
+        \textit{Econometric Theory,} 30(1), 176-200.
+  \item Hardle, W., P. Hall, and H. Ichimura (1993)
+        ``Optimal Smoothing in Single-Index Models,'' 
+        \textit{Annals of Statistics,} 21, 157-178.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{References}
+\begin{itemize}
+  \item Hardle, W., and T. M. Stoker (1989)
+        ``Investigating Smooth Multiple Regression by the Method of Average Derivatives,''
+        \textit{Journal of the American Statistical Association,} 84(408), 986-995.
+  \item Hardle, W., and A. B. Tsybakov (1993)
+        ``How Sensitive are Average Derivatives?''
+        \textit{Journal of Econometrics,} 58, 31-48.
+  \item Horowitz, J. L., and W. Hardle (1996)
+        ``Direct Semiparametric Estimation of Single-Index Models with Discrete Covariates,''
+        \textit{Journal of the American Statistical Association,} 91(436), 1632-1640.
+  \item Hristache, M., A. Juditsky, and V. Spokoiny (2001)
+        ``Direct Estimation of the Index Coefficient in a Single-Index Model,''
+        \textit{The Annals of Statistics,} 29(3), 593-623.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{References}
+ \begin{itemize}
+  \item Ichimura, H. (1993) 
+        ``Semiparametric Least Squares (SLS) and Weighted SLS Estimation of Single-Index Models,''
+        \textit{Journal of Econometrics,} 3, 205-228. 
+  \item Li, Q., X. Lu, and A. Ullah. (2003)
+        ``Multivariate Local Polynomial Regression for Estimating Average Derivatives,''
+        \textit{Journal of Nonparametric Statistics,} 15(4-5), 607-624.
+  \item Liang, H., and N. S. Wang (2005) 
+        ``Partially Linear Single-Index Measurement Error Models,'' 
+        \textit{Statistica Sinica,} 15, 99-116.
+  \item Newey, W. K. (1994)
+        ``Kernel Estimation of Partial Means and a General Variance Estimator,''
+        \textit{Econometric Theory,} 10, 233-253.
+  \item Nishiyama, Y., and P. M. Robinson (2005)
+        ``The Bootstrap and the Edgeworth Correction for Semiparametric Averaged Derivatives,''
+        \textit{Econometrica,} 73, 903-948.
+ \end{itemize} 
+\end{frame}
+
+\begin{frame}{References}
+  \begin{itemize}
+  \item Powell, J. L., J. H. Stock, and T. M. Stoker (1989)
+        ``Semiparametric Estimation of Index Coefficients,''
+        \textit{Econometrica,} 57(6), 1403-1430. 
+  \item Powell, J. L., and T. M. Stoker (1996)
+        ``Optimal Bandwidth Choice for Density-Weighted Averages,''
+        \textit{Journal of Econometrics,} 75(2), 291-316.
+  \item Rilstone, P. (1991)
+        ``Nonparametric Hypothesis Testing with Parametric Rates of Convergence,''
+        \textit{International Economic Review,} 32(1), 209-227.
+  \item Xia, Y., H. Tong, and W. K. Li (1999)
+        ``On Extended Partially Linear Single-Index Models,''
+        \textit{Biometrika,} 86(4), 831-842.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{References}
+  \begin{itemize}
+    \item Textbooks and Lecture Notes:
     \begin{itemize}
-      \item Hardle, W, P. Hall and H. Ichimura (1993)
-            ``Optimal Smoothing in Single-Index Models,'' \textit{Annals of Statistics,} 21, 157-178.
       \item Horowitz, J. L. (2009)
             \textit{Semiparametric and Nonparametric Methods in Econometrics,}
             Springer.
-      \item Ichimura, H. (1993) 
-            ``Semiparametric Least Squares (SLS) and Weighted SLS Estimation of Single-Index Models,''
-            \textit{Journal of Econometrics,} 3, 205-228. 
-      \item Li, Q. and J. S. Racine, (2007). 
+      \item Li, Q., and J. S. Racine (2007). 
             \textit{Nonparametric Econometrics: Theory and Practice,} 
             Princeton University Press.
+      \item Serfling, R. J. (1980)
+            \textit{Approximation Theorems of Mathematical statistics.} Wiley.
+      \item van der Vaart, A. W. (2000)
+            \textit{Asymptotic Statistics.} Cambridge.
       \item 末石直也 (2024) 『データ駆動型回帰分析：計量経済学と機械学習の融合』日本評論社．
       \item 西山慶彦，人見光太郎 (2023) 『ノン・セミパラメトリック統計解析（理論統計学教程：数理統計の枠組み）』共立出版．
+      \item ECON 718 NonParametric Econometrics (Bruce Hansen, Spring 2009, University of Wisconsin-Madison).
+      \item セミノンパラメトリック計量分析（末石直也，2014年度後期，京都大学）．
     \end{itemize}
-\end{frame}
-
-
-\begin{frame}{References (2)}
-\quad 
-Useful references also include some lecture notes of the following topic courses:
-  \begin{itemize}
-    \item ECON 718 NonParametric Econometrics (Bruce Hansen, Spring 2009, University of Wisconsin-Madison),
-    \item セミノンパラメトリック計量分析（末石直也，2014年度後期，京都大学）．
   \end{itemize}
 \end{frame}
+
+
+
 
 \end{document}
